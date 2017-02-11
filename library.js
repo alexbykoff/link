@@ -8,14 +8,16 @@ class Watchable {
         this.value = this.setInitial(initial);
     }
 
-    set (value){
-        let object = Object.assign(this, {value});
+    set(value) {
+        let object = Object.assign(this, {
+            value
+        });
         this.link();
         return object;
     }
 
     setInitial(initial) {
-        
+
         if (this._type === "any") {
             return initial;
         }
@@ -23,7 +25,7 @@ class Watchable {
         if (typeof this._type !== typeof initial) {
             throw new Error(Watchable.error("typeMismatch"));
         }
-        
+
     }
 
     setType(type) {
@@ -62,7 +64,7 @@ class Watchable {
             default:
                 break;
         }
-        console.warn("%c Library error: %c " + message, "color: white; background-color: navy", "");
+        console.warn("%c Watchable error: %c " + message, "color: white; background-color: navy", "");
     }
 
     link() {
@@ -70,7 +72,7 @@ class Watchable {
 
         list.forEach(w => {
             w.innerHTML = w.innerHTML
-                .replace(/\{{(.+?)\}}/g, (m, val) => eval(val+".value"));
+                .replace(/\{{(.+?)\}}/g, (m, val) => eval(val + ".value"));
         });
     }
 
