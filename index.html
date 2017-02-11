@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+  
+</head>
+<body>
+
+    <div watchable>Here goes my data:{{test2}}</div>
+    <div>
+        <div></div>
+    </div>
+    <ul watchable></ul>
+      <script src="./library.js"></script>
+    <script>
+       
+        var test2 = new Watchable({initial: 3});
+        test2.link();
+         var test = new Watchable({initial: "mystring", type: "number"});
+    </script>
+</body>
+</html>
