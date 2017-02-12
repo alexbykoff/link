@@ -15,8 +15,13 @@ create any HTML element with `watchable` attribute with value same as the name o
 You can put any text or elements inside that will be displayed until watchable is linked.  
 
 ### JS: 
-- `const cats = new Watchable("cats", {value: 2})`  
-creates new watchable
+- `const cats = new Watchable("cats", {value: 2, type: "number"})`  
+creates new watchable  
+arguments: `(name, {value: value, type: type})`  
+`name` - manadotry, must be the same as variable name  
+`value, type` - optional.   
+`value` can be any reasonable type. Defaults to `null`  
+`type` can be `"string"`, `"number"`, `"boolean"`, `"any"`, defaults to `"any"`  
 - `cats.link()`  
 links watchable to DOM   
 - `cats.subscribe( () => console.log("I have more cats now!"));`  
