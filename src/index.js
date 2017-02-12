@@ -8,6 +8,7 @@ class Watchable {
         if(typeof name !== "string"){
             Watchable.invokeError("nameMustBeString")
         }
+        this.name = name;
         this._type = this.setType(type);
         this.value = this.setInitialVal(value);
         this.callbacks = [];
@@ -49,6 +50,10 @@ class Watchable {
             this.callbacks.push(callback);
         }
 
+    }
+
+    detach(){
+        Watchable.watchables.splice(Watchable.watchables.indexOf(this.name), 1);
     }
 
     unsubscribe(){
@@ -99,7 +104,6 @@ class Watchable {
                 message = "watchable's name should always be a string.\
                 \nMay be you forgot to add the name argument.";
                 break;
-
 
             default:
                 break;
