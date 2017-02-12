@@ -42,6 +42,10 @@ class Watchable {
         return this._value;
     }
 
+    type() {
+        return this._type;
+    }
+
     setInitialVal(value) {
 
         if (this._type === "any") {

@@ -36,4 +36,6 @@ no more callbacks
 - `cats.detach()`  
 removes watchable, DOM is not updated anymore, value changes are recorded  
 - `cats.attach()`  
-links to DOM again. Last set value is rendered    
+links to DOM again. Last set value is rendered   
+- `cats.type()`  
+return watchable type. Hust in case
