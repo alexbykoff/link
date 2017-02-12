@@ -2,39 +2,40 @@ import error from "./errors";
 
 class Watchable {
 
-    //TODO: name should throw eror as well
     constructor(name = Watchable.invokeError("noName"), {
         value = null,
         type = "any"
     } = {}) {
-        if(typeof name !== "string"){
-            Watchable.invokeError("nameMustBeString")
-        }
-        this.name = name;
+
+        typeof name !== "string" && Watchable.invokeError("nameMustBeString");
+
+        this.name = name; // used for attaching and detaching
         this._type = this.setType(type);
         this.value = this.setInitialVal(value);
-        this.callbacks = [];
-        this.isDetached = false;
-        Watchable.watchables.push(name);
+        this.callbacks = []; // stores callbacks for this instance
+        this.isDetached = false; // initially watchable is attached to DOM
+
+        Watchable.watchables.push(name); // add this watchable to global list
     }
 
     set(value) {
 
         if (this.value === value) return;
-        // Do nothing, do not fire listeners if value has not changed
+        // Do nothing, do not fire listeners if value has not changed, do not rerender
 
         if (this._type !== "any" && typeof value !== typeof this._type){
             return Watchable.invokeError("typeMismatch");
-        // Do nothing and throw error if attempting to set wrong type value    
+        // Do nothing and throw error if attempting to set wrong type value
+        // Ignore type checking if type either "any" or omitted     
         }
 
-        this.value = value;
+        this.value = value; // TODO: not the ebst way
 
         if (this.callbacks.length) {
             this.callbacks.forEach( callback => callback());
         }
-        this.link();
-        return this;
+
+        this.link(); // Render watchables
     }
 
     setInitialVal(value) {
@@ -50,9 +51,10 @@ class Watchable {
     }
 
     subscribe(callback){
-        if(typeof callback !== "function"){
-            return;
-        }
+        // Adds callbacks that are invoked when value is changed
+        // Callbacks are not fired when watchable is detached
+
+        if(typeof callback !== "function") return; // only functions can subscribe to changes
 
         if(this.callbacks.indexOf(callback) == -1){
             this.callbacks.push(callback);
@@ -61,18 +63,24 @@ class Watchable {
     }
 
     detach(){
+        // Detach watchable from DOM. Note - value changes are still recorded
+
         Watchable.watchables.splice(Watchable.watchables.indexOf(this.name), 1);
         return this.isDetached = true;
     }
 
     attach(){
+        // Attaches watchable to DOM. Last set value is rendered (Even values set in detached mode)
+
         if (!this.isDetached) return Watchable.invokeError("cantAttach");
-        // TODO: run this only if it has been detached
         Watchable.watchables.push(this.name);
         this.link();
     }
 
     unsubscribe(){
+        // Removes all the subscriptions
+        // TODO: Handpick subscribers
+        
         this.callbacks = [];
     }
 
