@@ -19,10 +19,10 @@ You can put any text or elements inside that will be displayed until watchable i
 - `const cats = new Watchable("cats", {value: 2, type: "number"})`  
 creates new watchable  
 arguments: `(name, {value: value, type: type})`  
-`name` - manadotry, must be the same as variable name  
+`name` - string, manadotry, must be the same as variable name  
 `value, type` - optional.   
-`value` can be any reasonable type. Defaults to `null`  
-`type` can be `"string"`, `"number"`, `"boolean"`, `"any"`, defaults to `"any"`  
+`value` can be of any reasonable type. Defaults to `null`  
+`type` - string, can be `"string"`, `"number"`, `"boolean"`, `"any"`, defaults to `"any"`  
 - `cats.link()`  
 links watchable to DOM   
 - `cats.subscribe( () => console.log("I have more cats now!"));`  
@@ -32,6 +32,6 @@ DOM is updated with new value, callback is invoked
 - `cats.unsubscribe()`  
 no more callbacks  
 - `cats.detach()`  
-removes watchable, DOM is not updated anymore, value chnages are recorded  
+removes watchable, DOM is not updated anymore, value changes are recorded  
 - `cats.attach()`  
 links to DOM again. Last set value is rendered    
