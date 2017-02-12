@@ -19,7 +19,7 @@ gulp.task('babel', () => {
 gulp.task('webpack', ['babel'], (callback) => {
     const devConfig = Object.create(webpackConfig);
     devConfig.plugins = [
-      // new webpack.optimize.UglifyJsPlugin()
+      new webpack.optimize.UglifyJsPlugin()
     ];
 
     // run webpack
