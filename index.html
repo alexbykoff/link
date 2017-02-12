@@ -3,30 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
-  
 </head>
 <body>
-
     <div>Use test.set(value) to change it:<span watchable="test"></span></div>
     <div>
         <div></div>
     </div>
-    <p Your mouse X is at><span watchable="mousePos"></span></p>
-    
+    <p>Your mouse X is at <span watchable="mousePos"></span></p>
+
     <script src="./src/index.js"></script>
-    
+
     <script>
-       
         var test = new Watchable("test", {value: 3});
         test.link();
         test.subscribe(function(){
             console.log("test value has changed");
         })
-        var mousePos = new Watchable("mousePos",{value:"waiting for mouse"});      
+        var mousePos = new Watchable("mousePos",{value:"waiting for mouse"});
         document.addEventListener('mousemove', function(e){
             mousePos.set(e.screenX);
         })
-         mousePos.link();     
+        mousePos.link();
     </script>
 </body>
 </html>
