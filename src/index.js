@@ -111,7 +111,7 @@ class Watchable {
                 break;
         }
         console && console.warn("%c Watchable error: %c " + message, "color: white; background-color: navy", "");
-throw new Error();    
+throw new Error();
 }
 
     static render(el) {
@@ -127,3 +127,5 @@ throw new Error();
 }
 
 Watchable.watchables = [];
+
+module.exports = Watchable;
