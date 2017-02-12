@@ -27,7 +27,9 @@ arguments: `(name, {value: value, type: type})`
 links watchable to DOM   
 - `cats.subscribe( () => console.log("I have more cats now!"));`  
 callback is invoked every time watchable value is changed  
-- `cats.set(5)`  
+- `cats.value()`  
+returns current watchable value  
+- `cats.set(cats.value() + 5)`  
 DOM is updated with new value, callback is invoked  
 - `cats.unsubscribe()`  
 no more callbacks  

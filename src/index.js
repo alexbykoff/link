@@ -11,7 +11,7 @@ class Watchable {
 
         this.name = name; // used for attaching and detaching
         this._type = this.setType(type);
-        this.value = this.setInitialVal(value);
+        this._value = this.setInitialVal(value);
         this.callbacks = []; // stores callbacks for this instance
         this.isDetached = false; // initially watchable is attached to DOM
 
@@ -20,7 +20,7 @@ class Watchable {
 
     set(value) {
 
-        if (this.value === value) return;
+        if (this._value === value) return;
         // Do nothing, do not fire listeners if value has not changed, do not rerender
 
         if (this._type !== "any" && typeof value !== typeof this._type){
@@ -29,13 +29,17 @@ class Watchable {
         // Ignore type checking if type either "any" or omitted     
         }
 
-        this.value = value; // TODO: not the ebst way
+        this._value = value; // TODO: not the ebst way
 
         if (this.callbacks.length) {
             this.callbacks.forEach( callback => callback());
         }
 
         this.link(); // Render watchables
+    }
+
+    value() {
+        return this._value;
     }
 
     setInitialVal(value) {
@@ -45,8 +49,10 @@ class Watchable {
         }
 
         if (typeof this._type !== typeof value) {
-            Watchable.invokeError("typeMismatch");
+            return Watchable.invokeError("typeMismatch");
         }
+
+        return value;
 
     }
 
@@ -80,7 +86,7 @@ class Watchable {
     unsubscribe(){
         // Removes all the subscriptions
         // TODO: Handpick subscribers
-        
+
         this.callbacks = [];
     }
 
@@ -112,7 +118,7 @@ class Watchable {
 
 
     static render(el) {
-        return el.innerHTML = eval(el.getAttribute('watchable') + '.value');
+        return el.innerHTML = eval(el.getAttribute('watchable') + '._value');
     }
 
     link() {
