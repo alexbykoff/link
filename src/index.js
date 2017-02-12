@@ -14,6 +14,7 @@ class Watchable {
         this._type = this.setType(type);
         this.value = this.setInitialVal(value);
         this.callbacks = [];
+        this.isDetached = false;
         Watchable.watchables.push(name);
     }
 
@@ -61,6 +62,14 @@ class Watchable {
 
     detach(){
         Watchable.watchables.splice(Watchable.watchables.indexOf(this.name), 1);
+        return this.isDetached = true;
+    }
+
+    attach(){
+        if (!this.isDetached) return Watchable.invokeError("cantAttach");
+        // TODO: run this only if it has been detached
+        Watchable.watchables.push(this.name);
+        this.link();
     }
 
     unsubscribe(){

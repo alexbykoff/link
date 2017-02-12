@@ -32,4 +32,6 @@ DOM is updated with new value, callback is invoked
 - `cats.unsubscribe()`  
 no more callbacks  
 - `cats.detach()`  
-removes watchable, DOM is not updated anymore  
+removes watchable, DOM is not updated anymore, value chnages are recorded  
+- `cats.attach()`  
+links to DOM again. Last set value is rendered    

@@ -17,9 +17,13 @@ const error = (type) => {
             message = "watchable's name should always be a string.\
             \nMay be you forgot to add the name argument.";
             break;
+        
+        case("cantAttach"):
+            message = "you can not 'attach' a non-detached watchable. 'detach()' first.";
+            break;
 
         default:
-            break;
+            return;
     }
     console && console.warn("%c Watchable error: %c " + message, "color: white; background-color: navy", "");
     throw new Error();
