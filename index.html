@@ -16,11 +16,14 @@
     <script>
         var test = new Watchable("test", {value: 3});
         test.link();
-        var mousePos = new Watchable("mousePos", {value:"waiting for mouse"});
-        document.addEventListener('mousemove', function(e) {
+        test.subscribe(function(){
+            console.log("test value has changed");
+        })
+        var mousePos = new Watchable("mousePos",{value:"waiting for mouse"});
+        document.addEventListener('mousemove', function(e){
             mousePos.set(e.screenX);
-        });
-        mousePos.link();
+        })
+         mousePos.link();
     </script>
 </body>
 </html>
