@@ -1,4 +1,4 @@
-export const error = (type) => {
+const error = (type) => {
     let message;
 
     switch (type) {
@@ -24,3 +24,5 @@ export const error = (type) => {
     console && console.warn("%c Watchable error: %c " + message, "color: white; background-color: navy", "");
     throw new Error();
 };
+
+export default error;

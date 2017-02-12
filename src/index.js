@@ -23,7 +23,7 @@ class Watchable {
         // Do nothing, do not fire listeners if value has not changed
 
         if (typeof value !== typeof this._type){
-            return Watchable.invokeError("typeMismatch");
+            // return Watchable.invokeError("typeMismatch");
         // Do nothing and throw error if attempting to set wrong type value    
         }
 
