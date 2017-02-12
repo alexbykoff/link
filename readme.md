@@ -23,6 +23,7 @@ arguments: `(name, {value: value, type: type})`
 `value, type` - optional.   
 `value` can be of any reasonable type. Defaults to `null`  
 `type` - string, can be `"string"`, `"number"`, `"boolean"`, `"any"`, defaults to `"any"`  
+---
 - `cats.link()`  
 links watchable to DOM   
 - `cats.subscribe( () => console.log("I have more cats now!"));`  
@@ -38,4 +39,4 @@ removes watchable, DOM is not updated anymore, value changes are recorded
 - `cats.attach()`  
 links to DOM again. Last set value is rendered   
 - `cats.type()`  
-return watchable type. Hust in case
+return watchable type. Just in case
