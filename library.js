@@ -7,12 +7,20 @@ class Watchable {
     } = {}) {
         this._type = this.setType(type);
         this.value = this.setInitialVal(value);
+        this.callbacks = [];
         Watchable.watchables.push(name);
     }
 
     set(value) {
         // TODO: type checking
+        if (this.value === value) return;
+        // Do nothing, do not fire listeners if value has not changed
+
         this.value = value;
+
+        if (this.callbacks.length) {
+            this.callbacks.forEach( callback => callback());
+        }
         this.link();
         return this;
     }
@@ -25,6 +33,17 @@ class Watchable {
 
         if (typeof this._type !== typeof value) {
             throw new Error(Watchable.error("typeMismatch"));
+        }
+
+    }
+
+    subscribe(callback){
+        if(typeof callback !== "function"){
+            return;
+        }
+
+        if(this.callbacks.indexOf(callback) == -1){
+            this.callbacks.push(callback);
         }
 
     }
