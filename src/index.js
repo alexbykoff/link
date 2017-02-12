@@ -1,3 +1,5 @@
+import errors from "./errors";
+
 class Watchable {
 
     //TODO: name should throw eror as well
