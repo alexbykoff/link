@@ -1,6 +1,8 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d76a5963342e443bae700ac345907ba9)](https://www.codacy.com/app/spbeat/link?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=tomkallen/link&amp;utm_campaign=Badge_Grade)
 
-# Link
+![](./link.png)
+# Link  
+### An extremly simple library that binds variables to DOM
 
 ## Installation
 
@@ -23,7 +25,6 @@ arguments: `(name, {value: value, type: type})`
 `value, type` - optional.   
 `value` can be of any reasonable type. Defaults to `null`  
 `type` - string, can be `"string"`, `"number"`, `"boolean"`, `"any"`, defaults to `"any"`  
----
 - `cats.link()`  
 links watchable to DOM   
 - `cats.subscribe( () => console.log("I have more cats now!"));`  
