@@ -12,18 +12,18 @@
         <div></div>
     </div>
     <p Your mouse X is at><span watchable="mousePos"></span></p>
-      <script src="./library.js"></script>
+    
+    <script src="./library.js"></script>
+    
     <script>
        
         var test = new Watchable("test", {value: 3});
         test.link();
-        var mousePos = new Watchable("mousePos",{value:"waiting for mouse"});
-          
+        var mousePos = new Watchable("mousePos",{value:"waiting for mouse"});      
         document.addEventListener('mousemove', function(e){
             mousePos.setVal(e.screenX);
         })
-         mousePos.link();
-     
+         mousePos.link();     
     </script>
 </body>
 </html>

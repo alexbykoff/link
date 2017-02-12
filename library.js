@@ -1,5 +1,6 @@
 class Watchable {
 
+    //TODO: name should throw eror as well
     constructor(name = Watchable.error("noName"), {
         value = null,
         type = "any"
@@ -9,12 +10,11 @@ class Watchable {
         Watchable.watchables.push(name);
     }
 
-    setVal(value) {
-        let object = Object.assign(this, {
-            value
-        });
+    set(value) {
+        // TODO: type checking
+        this.value = value;
         this.link();
-        return object;
+        return this;
     }
 
     setInitialVal(value) {
@@ -61,9 +61,9 @@ class Watchable {
                 message = "value of Watchable should match its type.\
             \nIf you do not want strict typing then omit 'type' argument";
                 break;
-            
-            case("noName"):
-            message = "watchable's name should be provided as a first argument.\
+
+            case ("noName"):
+                message = "watchable's name should be provided as a first argument.\
             \nUsing watchable 'name' argument same as variable name is a good practice."
 
             default:
@@ -72,17 +72,16 @@ class Watchable {
         console && console.warn("%c Watchable error: %c " + message, "color: white; background-color: navy", "");
     }
 
-    static render(el){
+    static render(el) {
         return el.innerHTML = eval(el.getAttribute('watchable') + '.value');
     }
 
     link() {
         Watchable.watchables.map(watchable => {
-                const list = [...document.querySelectorAll(`[watchable=${watchable}]`)];
-                list.forEach( el => Watchable.render(el))
-            })
-        }
+            const list = [...document.querySelectorAll(`[watchable=${watchable}]`)];
+            list.forEach(el => Watchable.render(el))
+        })
     }
+}
 
-    Watchable.watchables = [];
-    
+Watchable.watchables = [];
