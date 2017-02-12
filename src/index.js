@@ -1,10 +1,13 @@
 class Watchable {
 
     //TODO: name should throw eror as well
-    constructor(name = Watchable.error("noName"), {
+    constructor(name = Watchable.invokeError("noName"), {
         value = null,
         type = "any"
     } = {}) {
+        if(typeof name !== "string"){
+            Watchable.invokeError("nameMustBeString")
+        }
         this._type = this.setType(type);
         this.value = this.setInitialVal(value);
         this.callbacks = [];
@@ -32,7 +35,7 @@ class Watchable {
         }
 
         if (typeof this._type !== typeof value) {
-            throw new Error(Watchable.error("typeMismatch"));
+            Watchable.invokeError("typeMismatch");
         }
 
     }
@@ -46,6 +49,10 @@ class Watchable {
             this.callbacks.push(callback);
         }
 
+    }
+
+    unsubscribe(){
+        this.callbacks = [];
     }
 
     setType(type) {
@@ -70,7 +77,9 @@ class Watchable {
 
         return type;
     }
-
+    static invokeError(errorcode){
+        throw new Error(Watchable.error(errorcode));
+    }
     static error(type) {
         let message;
 
@@ -83,13 +92,21 @@ class Watchable {
 
             case ("noName"):
                 message = "watchable's name should be provided as a first argument.\
-            \nUsing watchable 'name' argument same as variable name is a good practice."
+            \nUsing watchable 'name' argument same as variable name is a good practice.";
+                break;
+
+            case("nameMustBeString"):
+                message = "watchable's name should always be a string.\
+                \nMay be you forgot to add the name argument.";
+                break;
+
 
             default:
                 break;
         }
         console && console.warn("%c Watchable error: %c " + message, "color: white; background-color: navy", "");
-    }
+throw new Error();    
+}
 
     static render(el) {
         return el.innerHTML = eval(el.getAttribute('watchable') + '.value');
