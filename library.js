@@ -1,14 +1,15 @@
 class Watchable {
 
-    constructor({
-        initial = null,
+    constructor(name = Watchable.error("noName"), {
+        value = null,
         type = "any"
     } = {}) {
         this._type = this.setType(type);
-        this.value = this.setInitial(initial);
+        this.value = this.setInitialVal(value);
+        Watchable.watchables.push(name);
     }
 
-    set(value) {
+    setVal(value) {
         let object = Object.assign(this, {
             value
         });
@@ -16,13 +17,13 @@ class Watchable {
         return object;
     }
 
-    setInitial(initial) {
+    setInitialVal(value) {
 
         if (this._type === "any") {
-            return initial;
+            return value;
         }
 
-        if (typeof this._type !== typeof initial) {
+        if (typeof this._type !== typeof value) {
             throw new Error(Watchable.error("typeMismatch"));
         }
 
@@ -60,20 +61,28 @@ class Watchable {
                 message = "value of Watchable should match its type.\
             \nIf you do not want strict typing then omit 'type' argument";
                 break;
+            
+            case("noName"):
+            message = "watchable's name should be provided as a first argument.\
+            \nUsing watchable 'name' argument same as variable name is a good practice."
 
             default:
                 break;
         }
-        console.warn("%c Watchable error: %c " + message, "color: white; background-color: navy", "");
+        console && console.warn("%c Watchable error: %c " + message, "color: white; background-color: navy", "");
+    }
+
+    static render(el){
+        return el.innerHTML = eval(el.getAttribute('watchable') + '.value');
     }
 
     link() {
-        const list = [...document.querySelectorAll('[watchable]')];
-
-        list.forEach(w => {
-            w.innerHTML = w.innerHTML
-                .replace(/\{{(.+?)\}}/g, (m, val) => eval(val + ".value"));
-        });
+        Watchable.watchables.map(watchable => {
+                const list = [...document.querySelectorAll(`[watchable=${watchable}]`)];
+                list.forEach( el => Watchable.render(el))
+            })
+        }
     }
 
-}
+    Watchable.watchables = [];
+    

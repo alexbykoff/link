@@ -7,17 +7,23 @@
 </head>
 <body>
 
-    <div watchable>Here goes my data:{{test2}}</div>
+    <div>Use test.set(value) to change it:<span watchable="test"></span></div>
     <div>
         <div></div>
     </div>
-    <ul watchable></ul>
+    <p Your mouse X is at><span watchable="mousePos"></span></p>
       <script src="./library.js"></script>
     <script>
        
-        var test2 = new Watchable({initial: 3});
-        test2.link();
-         var test = new Watchable({initial: "mystring", type: "number"});
+        var test = new Watchable("test", {value: 3});
+        test.link();
+        var mousePos = new Watchable("mousePos",{value:"waiting for mouse"});
+          
+        document.addEventListener('mousemove', function(e){
+            mousePos.setVal(e.screenX);
+        })
+         mousePos.link();
+     
     </script>
 </body>
 </html>
