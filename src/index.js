@@ -18,9 +18,14 @@ class Watchable {
     }
 
     set(value) {
-        // TODO: type checking
+
         if (this.value === value) return;
         // Do nothing, do not fire listeners if value has not changed
+
+        if (typeof value !== typeof this._type){
+            return Watchable.invokeError("typeMismatch");
+        // Do nothing and throw error if attempting to set wrong type value    
+        }
 
         this.value = value;
 
