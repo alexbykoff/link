@@ -46,9 +46,10 @@ links to DOM again. Last set value is rendered
 - `cats.type()`  
 returns watchable type
 
-One-way binding:  
+### One-way binding:  
 `<input type="text" trackable="myInput" />`  
-`<p watchable="myInputTarcker"></p>`
+`<p watchable="myInputTarcker"></p>`  
 `const formData = new Watchable("myInputTracker");`  
 `formData.track("myInput");`  
-You are set.
+`formData.untrack()`
+ You are set.
