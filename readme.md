@@ -1,5 +1,7 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d76a5963342e443bae700ac345907ba9)](https://www.codacy.com/app/spbeat/link?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=tomkallen/link&amp;utm_campaign=Badge_Grade)
 [![Build Status](https://travis-ci.org/tomkallen/link.svg?branch=master)](https://travis-ci.org/tomkallen/link)
+[![codecov](https://codecov.io/gh/tomkallen/link/branch/master/graph/badge.svg)](https://codecov.io/gh/tomkallen/link)
+
 
 ![](./link.png)
 # Link  
@@ -46,9 +48,10 @@ links to DOM again. Last set value is rendered
 - `cats.type()`  
 returns watchable type
 
-One-way binding:  
+### One-way binding:  
 `<input type="text" trackable="myInput" />`  
-`<p watchable="myInputTarcker"></p>`
+`<p watchable="myInputTarcker"></p>`  
 `const formData = new Watchable("myInputTracker");`  
 `formData.track("myInput");`  
-You are set.
+`formData.untrack()`
+ You are set.
