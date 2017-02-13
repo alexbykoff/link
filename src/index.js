@@ -15,7 +15,7 @@ class Watchable {
         this.callbacks = []; // stores callbacks for this instance
         this.isDetached = false; // initially watchable is attached to DOM
 
-        Watchable.watchables.push(name); // add this watchable to global list
+        Watchable.watchables.add(name); // add this watchable to the global Set
 
         this.render();
     }
@@ -82,7 +82,7 @@ class Watchable {
 
         // Detach watchable from DOM. Note - value changes are still recorded
 
-        Watchable.watchables.splice(Watchable.watchables.indexOf(this.name), 1);
+        Watchable.watchables.has(this.name) && Watchable.watchables.delete(this.name);
         return this.isDetached = true;
 
     }
@@ -91,10 +91,11 @@ class Watchable {
 
         // Attaches watchable to DOM. Last set value is rendered (Even values set in detached mode)
 
-        if (!this.isDetached) return Watchable.invokeError("cantAttach");
-        Watchable.watchables.push(this.name);
-        this.link();
+        if (Watchable.watchables.has(this.name)) {
+            return Watchable.invokeError("cantAttach");
+        }
 
+        Watchable.watchables.add(this.name);
     }
 
     unsubscribe() {
@@ -138,14 +139,16 @@ class Watchable {
 
     render() {
 
-       [...document.querySelectorAll(`[watchable=${this.name}]`)]
-            .map(element => element.innerHTML = this._value);
+        if (!Watchable.watchables.has(this.name)) return;
+
+        [...document.querySelectorAll(`[watchable=${this.name}]`)]
+        .map(element => element.innerHTML = this._value);
 
     }
 
 }
 
-Watchable.watchables = [];
+Watchable.watchables = new Set();
 Watchable.error = error;
 
 module.exports = Watchable;
