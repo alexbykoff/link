@@ -1,29 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
-</head>
-<body>
-    <div>Use test.set(value) to change it:<span watchable="test"></span></div>
-    <div>
-        <div></div>
-    </div>
-    <p>Your mouse X is at <span watchable="mousePos"></span></p>
-
+    <title>Link.js</title>
     <script src="./dist/main.bundle.js"></script>
+</head>
 
+<body>
+    <h3>Click buttons to change value:<span watchable="test"></span></h3>
+    <div>
+        <div>
+            <button onclick="test.set(test.value()-1)">-</button>
+            <button onclick="test.set(test.value()+1)">+</button>
+        </div>
+    </div>
+    <h4>Your mouse X is at: <span watchable="mousePos">Waiting for mouse movement</span></h4>
     <script>
-        var test = new Watchable("test", {value: 3});
-        test.link();
-        test.subscribe(function(){
+        var test = new Watchable("test", {
+            value: 3
+        });
+
+        test.subscribe(function () {
             console.log("test value has changed");
         })
-        var mousePos = new Watchable("mousePos",{value:"waiting for mouse"});
-        document.addEventListener('mousemove', function(e){
-            mousePos.set(e.screenX);
-        })
-        mousePos.link();
+
+        var mousePos = new Watchable("mousePos", {
+            value: "waiting for mouse"
+        });
+
+        mousePos.subscribe(
+            document.addEventListener('mousemove', function (e) {
+                mousePos.set(e.screenX)
+            }));
     </script>
 </body>
+
 </html>

@@ -11,31 +11,45 @@ class Watchable {
 
         this.name = name; // used for attaching and detaching
         this._type = this.setType(type);
-        this.value = this.setInitialVal(value);
+        this._value = this.setInitialVal(value);
         this.callbacks = []; // stores callbacks for this instance
         this.isDetached = false; // initially watchable is attached to DOM
 
         Watchable.watchables.push(name); // add this watchable to global list
+
+        this.render();
     }
 
     set(value) {
 
-        if (this.value === value) return;
+        if (this._value === value) return;
         // Do nothing, do not fire listeners if value has not changed, do not rerender
 
-        if (this._type !== "any" && typeof value !== typeof this._type){
+        if (this._type !== "any" && typeof value !== typeof this._type) {
             return Watchable.invokeError("typeMismatch");
-        // Do nothing and throw error if attempting to set wrong type value
-        // Ignore type checking if type either "any" or omitted     
+            // Do nothing and throw error if attempting to set wrong type value
+            // Ignore type checking if type either "any" or omitted     
         }
 
-        this.value = value; // TODO: not the ebst way
+        this._value = value; // TODO: not the best way
 
         if (this.callbacks.length) {
-            this.callbacks.forEach( callback => callback());
+            this.callbacks.forEach(callback => callback());
         }
 
-        this.link(); // Render watchables
+        this.render();
+    }
+
+    value() {
+
+        return this._value;
+
+    }
+
+    type() {
+
+        return this._type;
+
     }
 
     setInitialVal(value) {
@@ -45,43 +59,51 @@ class Watchable {
         }
 
         if (typeof this._type !== typeof value) {
-            Watchable.invokeError("typeMismatch");
+            return Watchable.invokeError("typeMismatch");
         }
+
+        return value;
 
     }
 
-    subscribe(callback){
+    subscribe(callback) {
+
         // Adds callbacks that are invoked when value is changed
         // Callbacks are not fired when watchable is detached
 
-        if(typeof callback !== "function") return; // only functions can subscribe to changes
+        if (typeof callback !== "function") return; // only functions can subscribe to changes
 
-        if(this.callbacks.indexOf(callback) == -1){
+        if (this.callbacks.indexOf(callback) == -1) {
             this.callbacks.push(callback);
         }
-
     }
 
-    detach(){
+    detach() {
+
         // Detach watchable from DOM. Note - value changes are still recorded
 
         Watchable.watchables.splice(Watchable.watchables.indexOf(this.name), 1);
         return this.isDetached = true;
+
     }
 
-    attach(){
+    attach() {
+
         // Attaches watchable to DOM. Last set value is rendered (Even values set in detached mode)
 
         if (!this.isDetached) return Watchable.invokeError("cantAttach");
         Watchable.watchables.push(this.name);
         this.link();
+
     }
 
-    unsubscribe(){
+    unsubscribe() {
+
         // Removes all the subscriptions
         // TODO: Handpick subscribers
-        
+
         this.callbacks = [];
+
     }
 
     setType(type) {
@@ -105,22 +127,22 @@ class Watchable {
         }
 
         return type;
+
     }
-    static invokeError(errorcode){
+
+    static invokeError(errorcode) {
+
         throw new Error(Watchable.error(errorcode));
+
     }
 
+    render() {
 
-    static render(el) {
-        return el.innerHTML = eval(el.getAttribute('watchable') + '.value');
+       [...document.querySelectorAll(`[watchable=${this.name}]`)]
+            .map(element => element.innerHTML = this._value);
+
     }
 
-    link() {
-        Watchable.watchables.map(watchable => {
-            const list = [...document.querySelectorAll(`[watchable=${watchable}]`)];
-            list.forEach(el => Watchable.render(el))
-        })
-    }
 }
 
 Watchable.watchables = [];
