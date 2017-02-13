@@ -1,4 +1,5 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d76a5963342e443bae700ac345907ba9)](https://www.codacy.com/app/spbeat/link?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=tomkallen/link&amp;utm_campaign=Badge_Grade)
+[![Build Status](https://travis-ci.org/tomkallen/link.svg?branch=master)](https://travis-ci.org/tomkallen/link)
 
 ![](./link.png)
 # Link  
@@ -44,3 +45,10 @@ removes watchable, DOM is not updated anymore, value changes are recorded
 links to DOM again. Last set value is rendered   
 - `cats.type()`  
 returns watchable type
+
+One-way binding:  
+`<input type="text" trackable="myInput" />`  
+`<p watchable="myInputTarcker"></p>`
+`const formData = new Watchable("myInputTracker");`  
+`formData.track("myInput");`  
+You are set.
