@@ -21,6 +21,10 @@ const error = (type) => {
         case("cantAttach"):
             message = "you can not 'attach' a non-detached watchable. 'detach()' first.";
             break;
+        
+        case("cantSetTrackable"):
+            message = "you can not 'set' value while watchable is tracking the input. 'untrack()' first.";
+            break;
 
         default:
             return;

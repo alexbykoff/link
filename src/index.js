@@ -14,6 +14,8 @@ class Watchable {
         this._value = this.setInitialVal(value);
         this.callbacks = []; // stores callbacks for this instance
         this.isDetached = false; // initially watchable is attached to DOM
+        this.tracking = false; // checks if watchable is tracking input
+        this.trackElement = ''; // attribute of tracked element
 
         Watchable.watchables.add(name); // add this watchable to the global Set
 
@@ -75,6 +77,17 @@ class Watchable {
 
         if (this.callbacks.indexOf(callback) == -1) {
             this.callbacks.push(callback);
+        }
+    }
+
+    track(name) {
+        const watcher = this;
+        const element = document.querySelectorAll(`[trackable=${name}]`)[0];
+        console.log(element)
+        if (element) {
+            this.tracking = true;
+            this.trackElement = name;
+            element.addEventListener('input', e => watcher.set(element.value));
         }
     }
 
