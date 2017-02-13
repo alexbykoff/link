@@ -4,7 +4,7 @@
   "description": "An extremly simple library that binds variables to DOM",
   "main": "gulpfile.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec",
     "start": "gulp server",
     "build": "gulp webpack"
   },
@@ -20,10 +20,13 @@
   "homepage": "https://github.com/tomkallen/link#readme",
   "devDependencies": {
     "babel-preset-es2015": "^6.22.0",
+    "chai": "^3.5.0",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-concat": "^2.6.1",
     "gulp-util": "^3.0.8",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.2.0",
     "webpack": "^2.2.1",
     "webpack-dev-server": "^2.3.0"
   }

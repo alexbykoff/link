@@ -35,7 +35,6 @@ gulp.task('webpack', ['babel'], (callback) => {
 
 gulp.task('server', ['webpack'], (callback) => {
     const devConfig = Object.create(webpackConfig);
-    devConfig.devtool = 'eval';
 
     new WebpackDevServer(webpack(devConfig), {
         publicPath: '/' + devConfig.output.publicPath,
