@@ -8,14 +8,18 @@
 </head>
 
 <body>
-    <h3>Click buttons to change value:<span watchable="test"></span></h3>
-    <div>
+    <img style="display: block; margin: 0 auto" src="./link.png" alt="">
+    <h1 style="text-align: center">L I N K</h1>
+    <h3 style="text-align: center">An extremly simple library that binds variables to DOM</h3>
+    
+    <div style="width: 80%; margin: 0 auto; background-color: #eee; padding: 2rem">
         <div>
+            <h4>Click buttons to change value:<span watchable="test"></span></h4>
             <button onclick="test.set(test.value()-1)">-</button>
             <button onclick="test.set(test.value()+1)">+</button>
         </div>
+        <h4>Your mouse X is at: <span watchable="mousePos">Waiting for mouse movement</span></h4>
     </div>
-    <h4>Your mouse X is at: <span watchable="mousePos">Waiting for mouse movement</span></h4>
     <script>
         var test = new Watchable("test", {
             value: 3
