@@ -4,11 +4,15 @@
 # Link  
 ### An extremly simple library that binds variables to DOM
 
-## Installation
+## Installation (dev)
 
 1. Install the dependencies with `npm install`.
 2. Run `npm run build` to create a build in `dist/` folder.
 3. Run `npm run start` to start dev server at http://localhost:8080/
+
+## Installation (usage)
+
+1. `<script src="./dist/main.bunle.js"></script>`
 
 ## Usage
 
@@ -25,8 +29,7 @@ arguments: `(name, {value: value, type: type})`
 `value, type` - optional.   
 `value` can be of any reasonable type. Defaults to `null`  
 `type` - string, can be `"string"`, `"number"`, `"boolean"`, `"any"`, defaults to `"any"`  
-- `cats.link()`  
-links watchable to DOM   
+
 - `cats.subscribe( () => console.log("I have more cats now!"));`  
 callback is invoked every time watchable value is changed  
 - `cats.value()`  
@@ -40,4 +43,4 @@ removes watchable, DOM is not updated anymore, value changes are recorded
 - `cats.attach()`  
 links to DOM again. Last set value is rendered   
 - `cats.type()`  
-return watchable type. Just in case
+returns watchable type
