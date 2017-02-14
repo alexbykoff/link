@@ -17,13 +17,17 @@ const error = (type) => {
             message = "watchable's name should always be a string and be the same as varaibale name.\
             \nMay be you forgot to add the name argument.";
             break;
-        
-        case("cantAttach"):
+
+        case ("cantAttach"):
             message = "you can not 'attach' a non-detached watchable. 'detach()' first.";
             break;
-        
-        case("cantSetTrackable"):
-            message = "you can not 'set' value while watchable is tracking the input. 'untrack()' first.";
+
+        case ("cantUntrack"):
+            message = "you can not untrack(). You are not tracking anything.";
+            break;
+
+        case ("cantTrack"):
+            message = "you are already tracking.";
             break;
 
         default:

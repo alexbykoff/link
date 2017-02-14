@@ -16,6 +16,8 @@ class Watchable {
         this.isDetached = false; // initially watchable is attached to DOM
         this.tracking = false; // checks if watchable is tracking input
         this.trackElement = ''; // attribute of tracked element
+        
+        this.event = (e) => this.set(e.target.value); // this is the tracking event stored as 'this' bound fucntion 
 
         Watchable.watchables.add(name); // add this watchable to the global Set
 
@@ -81,19 +83,33 @@ class Watchable {
     }
 
     track(name) {
-        const watcher = this;
+
+        // Starts tracking any input text and binds to it. Can only tarck one input a time.
+
+        if(this.tracking) return Watchable.invokeError("cantTrack");
+
         const element = document.querySelectorAll(`[trackable=${name}]`)[0];
-        console.log(element)
+
         if (element) {
             this.tracking = true;
-            this.trackElement = name;
-            element.addEventListener('input', e => watcher.set(element.value));
+            this.trackElement = element;
+            element.addEventListener('input', this.event);
         }
+    }
+
+    untrack() {
+
+        // Removes tracking listener from the element. Does not affect any other listeners attached.
+
+        if (!this.tracking) return Watchable.invokeError("cantUntrack");
+        this.tracking = false;
+        this.trackElement.removeEventListener('input', this.event);
+
     }
 
     detach() {
 
-        // Detach watchable from DOM. Note - value changes are still recorded
+        // Detach watchable from DOM updates. Note - value changes are still recorded
 
         Watchable.watchables.has(this.name) && Watchable.watchables.delete(this.name);
         return this.isDetached = true;
@@ -102,7 +118,7 @@ class Watchable {
 
     attach() {
 
-        // Attaches watchable to DOM. Last set value is rendered (Even values set in detached mode)
+        // Attaches watchable to DOM updates. Last set value is rendered (Even the values set in detached mode)
 
         if (Watchable.watchables.has(this.name)) {
             return Watchable.invokeError("cantAttach");
