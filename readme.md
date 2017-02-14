@@ -50,11 +50,16 @@ returns watchable type
 
 ### One-way binding:  
 `<input type="text" id="myinput" />` - create input with id  
-`<p data-watchable="myInputTarcker"></p>` - create watchable element   
+`<p data-watchable="myInputTracker"></p>` - create watchable element   
   
 `const myText = new Watchable("myInputTracker");` - set up watchable  
 `myText.binds("myinput");` - bind watchable to input  
 `myText.binds()` - unbind watchable  
 
-You are set.
+### Two-way binding:
+`<input type="text" id="myinput" data-link="myInputTracker"/>` - add `data-link` attribute with watchable's name to refer to. Both elements are now linked.  
+You can `data-link` as much elements to one watchable as you want.   
+`myInputTracker.set("new value!");` - input field changes as well.  
+
+###You are set.
 

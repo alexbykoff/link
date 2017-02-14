@@ -17,7 +17,7 @@ class Watchable {
         this.tracking = false; // checks if watchable is tracking input
         this.trackElement = ''; // attribute of tracked element
 
-       this.event = (e) => this.set(e.target.value); // this is the tracking event stored as 'this' bound fucntion
+        this.event = (e) => this.set(e.target.value); // this is the tracking event stored as 'this' bound fucntion
 
         Watchable.watchables.add(name); // add this watchable to the global Set
 
@@ -75,7 +75,7 @@ class Watchable {
 
         if (typeof callback !== "function") return; // only functions can subscribe to changes
 
-        if (this.callbacks.indexOf(callback) == -1) {
+        if (this.callbacks.indexOf(callback) === -1) {
             this.callbacks.push(callback);
         }
     }
@@ -86,7 +86,7 @@ class Watchable {
 
         if (!id && this.tracking){
             this.tracking = false;
-            return this.trackElement.removeEventListener('input', this.event)
+            return this.trackElement.removeEventListener('input', this.event);
         }
 
         if(id && this.tracking) return Watchable.invokeError("cantTrack");
@@ -161,7 +161,19 @@ class Watchable {
         if (!Watchable.watchables.has(this.name)) return;
 
         [...document.querySelectorAll(`[data-watchable=${this.name}]`)]
-        .map(element => element.innerHTML = this._value);
+        .map(element => {
+            return element.innerHTML = this._value
+        });
+
+        const links = [...document.querySelectorAll(`[data-link=${this.name}]`)];
+        
+        if (!links.length) return;
+            links.map(link => {
+                if (link.nodeName === "INPUT") {
+                    return link.value = this._value
+                }
+                return link.innerHTML = this._value;
+            });       
     }
 }
 
