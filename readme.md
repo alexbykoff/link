@@ -49,9 +49,9 @@ links to DOM again. Last set value is rendered
 returns watchable type
 
 ### One-way binding:  
-`<input type="text" trackable="myInput" />`  
+`<input type="text" id="myinput" />`  
 `<p watchable="myInputTarcker"></p>`  
 `const formData = new Watchable("myInputTracker");`  
-`formData.track("myInput");`  
-`formData.untrack()`
+`formData.binds("myinput");`  
+`formData.unbinds()`
  You are set.
