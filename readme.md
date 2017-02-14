@@ -20,7 +20,7 @@
 ## Usage
 
 ### HTML:
-`<p>At the moment I have <span watchable="cats"></span> cats!</p>`  
+`<p>At the moment I have <span data-watchable="cats"></span> cats!</p>`  
 create any HTML element with `watchable` attribute with value same as the name of your watchable variable.  
 You can put any text or elements inside that will be displayed until watchable is linked. After that an every time the variable is changed the new value is rendered to the DOM.   
 
