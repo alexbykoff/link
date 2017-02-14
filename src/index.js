@@ -41,7 +41,7 @@ class Watchable {
             this.callbacks.forEach(callback => callback());
         }
 
-        this.render();
+        return this.render();
     }
 
     value() {
@@ -76,7 +76,7 @@ class Watchable {
         if (typeof callback !== "function") return; // only functions can subscribe to changes
 
         if (this.callbacks.indexOf(callback) === -1) {
-            this.callbacks.push(callback);
+            return this.callbacks.push(callback);
         }
     }
 
@@ -116,7 +116,7 @@ class Watchable {
             return Watchable.invokeError("cantAttach");
         }
 
-        Watchable.watchables.add(this.name);
+        return Watchable.watchables.add(this.name);
     }
 
     unsubscribe() {
@@ -124,7 +124,7 @@ class Watchable {
         // Removes all the subscriptions
         // TODO: Handpick subscribers
 
-        this.callbacks = [];
+        return this.callbacks = [];
 
     }
 
