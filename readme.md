@@ -5,7 +5,9 @@
 
 ![](./link.png)
 # Link  
-### An extremly simple library that binds variables to DOM
+### An extremly simple library that binds variables to DOM  
+
+[Live demo here](https://tomkallen.github.io/link/)  
 
 ### Installation (dev)
 
@@ -15,7 +17,7 @@
 
 ### Installation (usage)
 
-1. `<script src="./dist/main.bunle.js"></script>`
+1. `<script src="./dist/main.bundle.js"></script>`
 
 ## Usage
 
