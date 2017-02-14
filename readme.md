@@ -50,7 +50,7 @@ returns watchable type
 
 ### One-way binding:  
 `<input type="text" id="myinput" />` - create input with id  
-`<p watchable="myInputTarcker"></p>` - create watchable element   
+`<p data-watchable="myInputTarcker"></p>` - create watchable element   
   
 `const myText = new Watchable("myInputTracker");` - set up watchable  
 `myText.binds("myinput");` - bind watchable to input  
