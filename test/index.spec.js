@@ -1,9 +1,9 @@
-const Watchable = require("../dist/main.bundle.js");
+const Watchable = require("../src/index.js");
 const chai = require("chai");
 const expect = chai.expect;
 
 describe("Sanity check", () => {
-    it("should be defined", () => {
-        expect(Watchable).not.to.be.an("undefined");
+    it("should be a function", () => {
+        expect(Watchable).to.be.a("function");
     });
 });
