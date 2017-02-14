@@ -17,7 +17,7 @@ class Watchable {
         this.tracking = false; // checks if watchable is tracking input
         this.trackElement = ''; // attribute of tracked element
 
-        this.event = (e) => this.set(e.target.value); // this is the tracking event stored as 'this' bound fucntion
+       this.event = (e) => this.set(e.target.value); // this is the tracking event stored as 'this' bound fucntion
 
         Watchable.watchables.add(name); // add this watchable to the global Set
 
@@ -47,13 +47,11 @@ class Watchable {
     value() {
 
         return this._value;
-
     }
 
     type() {
 
         return this._type;
-
     }
 
     setInitialVal(value) {
@@ -82,29 +80,24 @@ class Watchable {
         }
     }
 
-    track(name) {
+    binds(id) {
 
         // Starts tracking any input text and binds to it. Can only tarck one input a time.
 
-        if(this.tracking) return Watchable.invokeError("cantTrack");
+        if (!id && this.tracking){
+            this.tracking = false;
+            return this.trackElement.removeEventListener('input', this.event)
+        }
 
-        const element = document.querySelectorAll(`[data-trackable=${name}]`)[0];
+        if(id && this.tracking) return Watchable.invokeError("cantTrack");
+
+        const element = document.getElementById(id);
 
         if (element) {
             this.tracking = true;
             this.trackElement = element;
-            element.addEventListener('input', this.event);
+            return element.addEventListener('input', this.event);
         }
-    }
-
-    untrack() {
-
-        // Removes tracking listener from the element. Does not affect any other listeners attached.
-
-        if (!this.tracking) return Watchable.invokeError("cantUntrack");
-        this.tracking = false;
-        this.trackElement.removeEventListener('input', this.event);
-
     }
 
     detach() {
@@ -113,7 +106,6 @@ class Watchable {
 
         Watchable.watchables.has(this.name) && Watchable.watchables.delete(this.name);
         return this.isDetached = true;
-
     }
 
     attach() {
@@ -157,13 +149,11 @@ class Watchable {
         }
 
         return type;
-
     }
 
     static invokeError(errorcode) {
 
         throw new Error(Watchable.error(errorcode));
-
     }
 
     render() {
@@ -172,9 +162,7 @@ class Watchable {
 
         [...document.querySelectorAll(`[data-watchable=${this.name}]`)]
         .map(element => element.innerHTML = this._value);
-
     }
-
 }
 
 Watchable.watchables = new Set();

@@ -25,7 +25,7 @@
         </div>
         <h4>Your mouse X is at: <span data-watchable="mousePos">Waiting for mouse movement</span></h4>
         <div>One-way binding - start typing in the input below: <span data-watchable="inputField"></span></div>
-        <input type="text" data-trackable="inputField">
+        <input type="text" id="myinput">
     </div>
     <script>
         var test = new Watchable("test", {
@@ -37,7 +37,7 @@
         })
 
         var inputField = new Watchable("inputField");
-        inputField.track("inputField");
+        inputField.binds("myinput");
 
         var mousePos = new Watchable("mousePos", {
             value: "waiting for mouse"
