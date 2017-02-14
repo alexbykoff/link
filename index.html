@@ -6,26 +6,26 @@
     <title>Link.js</title>
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <script src="./dist/main.bundle.js"></script>
-</head>
-
-<body>
     <style>
         body {
             font-family: 'Montserrat', sans-serif;
         }
     </style>
+</head>
+
+<body>
     <img style="display: block; margin: 0 auto" src="./link.png" alt="">
     <h1 style="text-align: center">L I N K</h1>
     <h3 style="text-align: center">An extremly simple library that binds variables to DOM</h3>
     <div style="width: 80%; margin: 0 auto; background-color: #eee; padding: 2rem">
         <div>
-            <h4>Click buttons to change value: <span watchable="test"></span></h4>
+            <h4>Click buttons to change value: <span data-watchable="test"></span></h4>
             <button onclick="test.set(test.value()-1)">-</button>
             <button onclick="test.set(test.value()+1)">+</button>
         </div>
-        <h4>Your mouse X is at: <span watchable="mousePos">Waiting for mouse movement</span></h4>
-        <div>One-way binding - start typing in the input below: <span watchable="inputField"></span></div>
-        <input type="text" trackable="inputField">
+        <h4>Your mouse X is at: <span data-watchable="mousePos">Waiting for mouse movement</span></h4>
+        <div>One-way binding - start typing in the input below: <span data-watchable="inputField"></span></div>
+        <input type="text" data-trackable="inputField">
     </div>
     <script>
         var test = new Watchable("test", {
