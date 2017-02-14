@@ -7,13 +7,13 @@
 # Link  
 ### An extremly simple library that binds variables to DOM
 
-## Installation (dev)
+### Installation (dev)
 
 1. Install the dependencies with `npm install`.
 2. Run `npm run build` to create a build in `dist/` folder.
 3. Run `npm run start` to start dev server at http://localhost:8080/
 
-## Installation (usage)
+### Installation (usage)
 
 1. `<script src="./dist/main.bunle.js"></script>`
 
@@ -49,9 +49,12 @@ links to DOM again. Last set value is rendered
 returns watchable type
 
 ### One-way binding:  
-`<input type="text" id="myinput" />`  
-`<p watchable="myInputTarcker"></p>`  
-`const formData = new Watchable("myInputTracker");`  
-`formData.binds("myinput");`  
-`formData.unbinds()`
- You are set.
+`<input type="text" id="myinput" />` - create input with id  
+`<p watchable="myInputTarcker"></p>` - create watchable element   
+  
+`const myText = new Watchable("myInputTracker");` - set up watchable  
+`myText.binds("myinput");` - bind watchable to input  
+`myText.binds()` - unbind watchable  
+
+You are set.
+
