@@ -16,8 +16,8 @@ class Watchable {
         this.isDetached = false; // initially watchable is attached to DOM
         this.tracking = false; // checks if watchable is tracking input
         this.trackElement = ''; // attribute of tracked element
-        
-        this.event = (e) => this.set(e.target.value); // this is the tracking event stored as 'this' bound fucntion 
+
+        this.event = (e) => this.set(e.target.value); // this is the tracking event stored as 'this' bound fucntion
 
         Watchable.watchables.add(name); // add this watchable to the global Set
 
@@ -32,7 +32,7 @@ class Watchable {
         if (this._type !== "any" && typeof value !== typeof this._type) {
             return Watchable.invokeError("typeMismatch");
             // Do nothing and throw error if attempting to set wrong type value
-            // Ignore type checking if type either "any" or omitted     
+            // Ignore type checking if type either "any" or omitted
         }
 
         this._value = value; // TODO: not the best way
@@ -88,7 +88,7 @@ class Watchable {
 
         if(this.tracking) return Watchable.invokeError("cantTrack");
 
-        const element = document.querySelectorAll(`[trackable=${name}]`)[0];
+        const element = document.querySelectorAll(`[data-trackable=${name}]`)[0];
 
         if (element) {
             this.tracking = true;
@@ -170,7 +170,7 @@ class Watchable {
 
         if (!Watchable.watchables.has(this.name)) return;
 
-        [...document.querySelectorAll(`[watchable=${this.name}]`)]
+        [...document.querySelectorAll(`[data-watchable=${this.name}]`)]
         .map(element => element.innerHTML = this._value);
 
     }
