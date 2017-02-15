@@ -5,16 +5,16 @@ const error = (type) => {
 
         case ("typeMismatch"):
             message = "value of Watchable should match its type.\
-        \nIf you do not want strict typing then omit 'type' argument";
+        \nIf you do not want strict typing then omit 'type' argument and it will default to 'any'";
             break;
 
         case ("noName"):
             message = "watchable's name should be provided as a first argument.\
-        \nWatchable 'name' argument must be the same as variable name.";
+        \nWatchable's 'name' argument same as variable's name is a good practice.";
             break;
 
         case ("nameMustBeString"):
-            message = "watchable's name should always be a string and be the same as varaibale name.\
+            message = "watchable's name should always be a string..\
             \nMay be you forgot to add the name argument.";
             break;
 
@@ -22,19 +22,15 @@ const error = (type) => {
             message = "you can not 'attach' a non-detached watchable. 'detach()' first.";
             break;
 
-        case ("cantUntrack"):
-            message = "you can not untrack(). You are not tracking anything.";
-            break;
-
-        case ("cantTrack"):
-            message = "you are already tracking.";
+        case ("cantBind"):
+            message = "watchable is already bound.";
             break;
 
         default:
             return;
     }
     console && console.warn("%c Watchable error: %c " + message, "color: white; background-color: navy", "");
-    throw new Error();
+    throw new Error("Link syntax error");
 };
 
 export default error;

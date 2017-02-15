@@ -5,7 +5,9 @@
 
 ![](./link.png)
 # Link  
-### An extremly simple library that binds variables to DOM
+### An extremly simple micro library that binds variables to DOM  
+
+[Live demo here](https://tomkallen.github.io/link/)  
 
 ### Installation (dev)
 
@@ -15,11 +17,16 @@
 
 ### Installation (usage)
 
-1. `<script src="./dist/main.bunle.js"></script>`
+1. `<script src="./dist/main.bundle.js"></script>`
 
 ## Usage
 
-### HTML:
+### HTML:  
+currently there are two data attributes you can use in your HTML code:  
+`data-watchable` - this element is replaced with the watchable's value. (watchabale is created as `new Watchable(options)`)    
+`data-link` - this element emits its value (i.e - input text) to the bound Watchable  
+No listeners or manual HTML updates needed.  
+
 `<p>At the moment I have <span data-watchable="cats"></span> cats!</p>`  
 create any HTML element with `watchable` attribute with value same as the name of your watchable variable.  
 You can put any text or elements inside that will be displayed until watchable is linked. After that an every time the variable is changed the new value is rendered to the DOM.   
@@ -33,7 +40,7 @@ arguments: `(name, {value: value, type: type})`
 `value` can be of any reasonable type. Defaults to `null`  
 `type` - string, can be `"string"`, `"number"`, `"boolean"`, `"any"`, defaults to `"any"`  
 
-- `cats.subscribe( () => console.log("I have more cats now!"));`  
+- `cats.subscribe( () => console.log("The number of cats has changed!"))`  
 callback is invoked every time watchable value is changed  
 - `cats.value()`  
 returns current watchable value  
@@ -49,11 +56,11 @@ links to DOM again. Last set value is rendered
 returns watchable type
 
 ### One-way binding:  
-`<input type="text" id="myinput" />` - create input with id  
+`<input type="text" id="myinput" />` - create input with as id  
 `<p data-watchable="myInputTracker"></p>` - create watchable element   
   
-`const myText = new Watchable("myInputTracker");` - set up watchable  
-`myText.binds("myinput");` - bind watchable to input  
+`const myText = new Watchable("myInputTracker")` - set up watchable  
+`myText.binds("myinput")` - bind watchable to input  
 `myText.binds()` - unbind watchable  
 
 ### Two-way binding:

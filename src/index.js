@@ -17,7 +17,7 @@ class Watchable {
         this.tracking = false; // checks if watchable is tracking input
         this.trackElement = ''; // attribute of tracked element
 
-        this.event = (e) => this.set(e.target.value); // this is the tracking event stored as 'this' bound fucntion
+        this.event = (event) => this.set(event.target.value); // this is the tracking event stored as 'this' bound fucntion
 
         Watchable.watchables.add(name); // add this watchable to the global Set
 
@@ -56,23 +56,15 @@ class Watchable {
 
     setInitialVal(value) {
 
-        if (this._type === "any") {
-            return value;
-        }
-
-        if (typeof this._type !== typeof value) {
-            return Watchable.invokeError("typeMismatch");
-        }
-
-        return value;
-
+        return this._type === "any" || typeof this._type === typeof value ?
+            value :
+            Watchable.invokeError("typeMismatch");
     }
 
     subscribe(callback) {
 
         // Adds callbacks that are invoked when value is changed
         // Callbacks are not fired when watchable is detached
-
         if (typeof callback !== "function") return; // only functions can subscribe to changes
 
         if (this.callbacks.indexOf(callback) === -1) {
@@ -82,14 +74,15 @@ class Watchable {
 
     binds(id) {
 
-        // Starts tracking any input text and binds to it. Can only tarck one input a time.
-
-        if (!id && this.tracking){
+        // Binds watchable to the input. Can only bind to one input a time.
+        if (!id && this.tracking) {
             this.tracking = false;
             return this.trackElement.removeEventListener('input', this.event);
         }
 
-        if(id && this.tracking) return Watchable.invokeError("cantTrack");
+        if (id && this.tracking) return Watchable.invokeError("cantBind");
+
+        if (!id) return;
 
         const element = document.getElementById(id);
 
@@ -103,7 +96,6 @@ class Watchable {
     detach() {
 
         // Detach watchable from DOM updates. Note - value changes are still recorded
-
         Watchable.watchables.has(this.name) && Watchable.watchables.delete(this.name);
         return this.isDetached = true;
     }
@@ -111,21 +103,16 @@ class Watchable {
     attach() {
 
         // Attaches watchable to DOM updates. Last set value is rendered (Even the values set in detached mode)
-
-        if (Watchable.watchables.has(this.name)) {
-            return Watchable.invokeError("cantAttach");
-        }
-
-        return Watchable.watchables.add(this.name);
+        return Watchable.watchables.has(this.name) ?
+            Watchable.invokeError("cantAttach") :
+            Watchable.watchables.add(this.name);
     }
 
     unsubscribe() {
 
         // Removes all the subscriptions
         // TODO: Handpick subscribers
-
         return this.callbacks = [];
-
     }
 
     setType(type) {
@@ -161,19 +148,16 @@ class Watchable {
         if (!Watchable.watchables.has(this.name)) return;
 
         [...document.querySelectorAll(`[data-watchable=${this.name}]`)]
-        .map(element => {
-            return element.innerHTML = this._value
-        });
+        .map(element => element.innerHTML = this._value);
 
         const links = [...document.querySelectorAll(`[data-link=${this.name}]`)];
-        
+
         if (!links.length) return;
-            links.map(link => {
-                if (link.nodeName === "INPUT") {
-                    return link.value = this._value
-                }
-                return link.innerHTML = this._value;
-            });       
+
+        links.map(link =>
+            link.nodeName === "INPUT" ?
+            link.value = this._value :
+            ink.innerHTML = this._value);
     }
 }
 
