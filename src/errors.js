@@ -25,6 +25,10 @@ const error = (type) => {
         case ("cantBind"):
             message = "watchable is already bound.";
             break;
+        
+        case("noDocument"):
+        message = "you can run this library from the HTML page only. No 'document' object was found";
+            break;
 
         default:
             return;

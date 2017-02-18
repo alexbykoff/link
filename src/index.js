@@ -144,6 +144,8 @@ class Watchable {
     }
 
     render() {
+        
+        if(!document) return Watchable.invokeError("noDocument");
 
         if (!Watchable.watchables.has(this.name)) return;
 
