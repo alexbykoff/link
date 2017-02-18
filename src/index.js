@@ -145,21 +145,40 @@ class Watchable {
 
     render() {
         
-        if(!document) return Watchable.invokeError("noDocument");
+        if (!document) return Watchable.invokeError("noDocument");
 
         if (!Watchable.watchables.has(this.name)) return;
 
-        [...document.querySelectorAll(`[data-watchable=${this.name}]`)]
-        .map(element => element.innerHTML = this._value);
+        const dataWatchableArray = [...document.querySelectorAll(`[data-watchable=${this.name}]`)];
+        const dataLinkArray = [...document.querySelectorAll(`[data-link=${this.name}]`)];
+        const dataRepeatArray = [...document.querySelectorAll(`[data-repeat=${this.name}]`)];
 
-        const links = [...document.querySelectorAll(`[data-link=${this.name}]`)];
+        dataWatchableArray.map(element => element.innerHTML = this._value);
 
-        if (!links.length) return;
+        if (dataRepeatArray.length && this._value) {
 
-        links.map(link =>
+            if (!Array.isArray(this._value)) {
+                return Watchable.invokeError("notEnumerable");
+            }
+            dataRepeatArray.map(element => {
+                const child = [...element.childNodes][0];
+                element.innerHTML = '';
+                this._value.forEach(value =>{
+                    const sibling = document.createElement(child.nodeName);
+                    // TODO: add .value for inputs
+                    sibling.innerHTML = value;
+                    element.appendChild(sibling);
+                });
+                
+            });
+        }
+
+        if (!dataLinkArray.length) return;
+
+        dataLinkArray.map(link =>
             link.nodeName === "INPUT" ?
             link.value = this._value :
-            ink.innerHTML = this._value);
+            link.innerHTML = this._value);
     }
 }
 
