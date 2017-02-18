@@ -22,10 +22,11 @@
 ## Usage
 
 ### HTML:  
-currently there are two data attributes you can use in your HTML code:  
+currently there are three data attributes you can use in your HTML elements:  
 `data-watchable` - this element is replaced with the watchable's value. (watchabale is created as `new Watchable(options)`)    
 `data-link` - this element emits its value (i.e - input text) to the bound Watchable  
-No listeners or manual HTML updates needed.  
+No listeners or manual HTML updates needed. 
+`data-repeat` - this element is a wrapper for enumerable data you want to dispaly as a list.  
 
 `<p>At the moment I have <span data-watchable="cats"></span> cats!</p>`  
 create any HTML element with `watchable` attribute with value same as the name of your watchable variable.  
@@ -67,6 +68,12 @@ returns watchable type
 `<input type="text" id="myinput" data-link="myInputTracker"/>` - add `data-link` attribute with watchable's name to refer to. Both elements are now linked.  
 You can `data-link` as much elements to one watchable as you want.   
 `myInputTracker.set("new value!");` - input field changes as well.  
+
+## Repeatables:  
+`<div data-repeat="mycats"><p>There goes my list of cats</p></div>`
+`const catList = new Watchable("mycats")`
+`let catArray =["Meower", "Bigelow", "Fluffy", "Jackson"]`
+`catList.set(catArray)`  
 
 ###You are set.
 

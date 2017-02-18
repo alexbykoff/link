@@ -30,6 +30,10 @@
         <input type="text" data-link="inputField" id="myinput">
         <p>Below there is a two-way binding</p>
         <p data-link="inputField"></p>
+        <br>
+        <p>There goes "data-repeat" for [1, 2, 3, "cats"]</p>
+        <button onclick="arr.set([1,2,3,'cats'])">click to generate a list of data</button>
+        <div data-repeat="arr"><p>Waiting for your action</p></div>
     </div>
     <script>
         var test = new Watchable("test", {
@@ -46,6 +50,8 @@
         var mousePos = new Watchable("mousePos", {
             value: "waiting for mouse"
         });
+
+        var arr= new Watchable("arr");
 
         mousePos.subscribe(
             document.addEventListener('mousemove', function (e) {
