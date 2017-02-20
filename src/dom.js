@@ -7,7 +7,9 @@ DOM.dataRepeater = function (args) {
             return Watchable.invokeError("notEnumerable");
         }
         args.map(element => {
-            const child = [...element.childNodes][0];
+            console.log(element)
+            const child = element.childNodes;
+            console.log(child)
             element.innerHTML = '';
             this._value.forEach(value => {
                 const sibling = document.createElement(child.nodeName);
