@@ -24,12 +24,13 @@
             <button onclick="test.set(test.value()+1)">+</button>
         </div>
         <h4>Your mouse X is at: <span data-watchable="mousePos">Waiting for mouse movement</span></h4>
-        <div>One-way binding - start typing in the input below: <span data-watchable="inputField">waiting for input</span>
-        
+        <div>One and two-way binding - start typing in the input below: <p data-watchable="inputField"></p>
+        <button onClick="inputField.set('All linked elements changed as well')">Click to change text above</button>
+        <br>
         </div>
-        <input type="text" data-link="inputField" id="myinput">
-        <p>Below there is a two-way binding</p>
-        <p data-link="inputField"></p>
+        <input type="text" data-link="inputField" id="myinput" placeholder="this is linked">
+        <p>Below there is a two-way binding. It does not have 'data-watchable' attribute, just a link</p>
+        <p data-link="inputField">There we go</p>
         <br>
         <p>There goes "data-repeat" for [1, 2, 3, "cats"]</p>
         <button onclick="arr.set([1,2,3,'cats'])">click to generate a list of data</button>
