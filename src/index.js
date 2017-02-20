@@ -1,13 +1,17 @@
 import error from "./errors";
+import DOM from './dom';
 
 class Watchable {
-
     constructor(name = Watchable.invokeError("noName"), {
         value = null,
         type = "any"
     } = {}) {
 
         typeof name !== "string" && Watchable.invokeError("nameMustBeString");
+
+        this.watch = DOM.dataWatcher.bind(this);
+        this.repeat = DOM.dataRepeater.bind(this);
+        this.link = DOM.dataLinker.bind(this);
 
         this.name = name; // used for attaching and detaching
         this._type = this.setType(type);
@@ -25,10 +29,8 @@ class Watchable {
     }
 
     set(value) {
-
         if (this._value === value) return;
-        // Do nothing, do not fire listeners if value has not changed, do not rerender
-
+        // Do nothing, do not fire listeners if value has not changed, do not rerende
         if (this._type !== "any" && typeof value !== typeof this._type) {
             return Watchable.invokeError("typeMismatch");
             // Do nothing and throw error if attempting to set wrong type value
@@ -45,24 +47,20 @@ class Watchable {
     }
 
     value() {
-
         return this._value;
     }
 
     type() {
-
         return this._type;
     }
 
     setInitialVal(value) {
-
         return this._type === "any" || typeof this._type === typeof value ?
             value :
             Watchable.invokeError("typeMismatch");
     }
 
     subscribe(callback) {
-
         // Adds callbacks that are invoked when value is changed
         // Callbacks are not fired when watchable is detached
         if (typeof callback !== "function") return; // only functions can subscribe to changes
@@ -73,7 +71,6 @@ class Watchable {
     }
 
     binds(id) {
-
         // Binds watchable to the input. Can only bind to one input a time.
         if (!id && this.tracking) {
             this.tracking = false;
@@ -81,7 +78,6 @@ class Watchable {
         }
 
         if (id && this.tracking) return Watchable.invokeError("cantBind");
-
         if (!id) return;
 
         const element = document.getElementById(id);
@@ -94,14 +90,12 @@ class Watchable {
     }
 
     detach() {
-
         // Detach watchable from DOM updates. Note - value changes are still recorded
         Watchable.watchables.has(this.name) && Watchable.watchables.delete(this.name);
         return this.isDetached = true;
     }
 
     attach() {
-
         // Attaches watchable to DOM updates. Last set value is rendered (Even the values set in detached mode)
         return Watchable.watchables.has(this.name) ?
             Watchable.invokeError("cantAttach") :
@@ -109,15 +103,13 @@ class Watchable {
     }
 
     unsubscribe() {
-
         // Removes all the subscriptions
         // TODO: Handpick subscribers
         return this.callbacks = [];
     }
 
     setType(type) {
-
-        switch (type) {
+      switch (type) {
 
             case "string":
                 type = "string";
@@ -139,50 +131,28 @@ class Watchable {
     }
 
     static invokeError(errorcode) {
-
         throw new Error(Watchable.error(errorcode));
     }
 
-    render() {
-        
-        if (!document) return Watchable.invokeError("noDocument");
 
+
+    render() {
+        if (!document) return Watchable.invokeError("noDocument");
         if (!Watchable.watchables.has(this.name)) return;
 
         const dataWatchableArray = [...document.querySelectorAll(`[data-watchable=${this.name}]`)];
         const dataLinkArray = [...document.querySelectorAll(`[data-link=${this.name}]`)];
         const dataRepeatArray = [...document.querySelectorAll(`[data-repeat=${this.name}]`)];
 
-        dataWatchableArray.map(element => element.innerHTML = this._value);
-
-        if (dataRepeatArray.length && this._value) {
-
-            if (!Array.isArray(this._value)) {
-                return Watchable.invokeError("notEnumerable");
-            }
-            dataRepeatArray.map(element => {
-                const child = [...element.childNodes][0];
-                element.innerHTML = '';
-                this._value.forEach(value =>{
-                    const sibling = document.createElement(child.nodeName);
-                    // TODO: add .value for inputs
-                    sibling.innerHTML = value;
-                    element.appendChild(sibling);
-                });
-                
-            });
-        }
-
-        if (!dataLinkArray.length) return;
-
-        dataLinkArray.map(link =>
-            link.nodeName === "INPUT" ?
-            link.value = this._value :
-            link.innerHTML = this._value);
+        this
+            .watch(dataWatchableArray)
+            .repeat(dataRepeatArray)
+            .link(dataLinkArray);
     }
 }
 
 Watchable.watchables = new Set();
 Watchable.error = error;
+
 
 module.exports = Watchable;
