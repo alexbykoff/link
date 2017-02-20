@@ -11,8 +11,9 @@ DOM.dataRepeater = function (args) {
             element.innerHTML = '';
             this._value.forEach(value => {
                 const sibling = document.createElement(child.nodeName);
-                // TODO: add .value for inputs
-                sibling.innerHTML = value;
+                sibling.nodeName === "INPUT" ?
+                    sibling.value = value :
+                    sibling.innerHTML = value;
                 element.appendChild(sibling);
             });
 
