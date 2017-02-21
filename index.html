@@ -44,6 +44,9 @@
         test.subscribe(function () {
             console.log("test value has changed");
         })
+         test.subscribe(function () {
+            console.log("test value has changed yo");
+        })
 
         var inputField = new Watchable("inputField");
         inputField.binds("myinput");
