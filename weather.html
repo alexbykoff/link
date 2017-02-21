@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Link.js</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <script src="./dist/main.bundle.js"></script>
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Weather Foecast service</h1>
+    <div>
+        <p>Input city name or multiple cities separated by comma</p>
+        <input type="text" id="l" />
+        <button onclick="run()">Submit</button>
+        <ul data-repeat="list">
+          <li></li>
+        </ul>
+    </div>
+    <script>
+        var list = new Watchable("list");
+
+        function run(e) {
+            let city = document.getElementById('l').value;
+            let lists;
+            //list.set(document.getElementById('listOne').value)
+            fetch('http://api.openweathermap.org/data/2.5/forecast?q=' + city +
+                    '&APPID=90c25a416eff51ad7d39edce020ae422')
+                .then(response => response.json())
+                .then(response => {
+                    lists = response.list.map(c => c.main.temp - 273);
+                })
+                .then(r => list.set(lists))
+        }
+    </script>
+</body>

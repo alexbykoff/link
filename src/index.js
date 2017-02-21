@@ -144,10 +144,9 @@ class Watchable {
         const dataLinkArray = [...document.querySelectorAll(`[data-link=${this.name}]`)];
         const dataRepeatArray = [...document.querySelectorAll(`[data-repeat=${this.name}]`)];
 
-        this
-            .watch(dataWatchableArray)
-            .repeat(dataRepeatArray)
-            .link(dataLinkArray);
+       this.watch(dataWatchableArray)
+            this.repeat(dataRepeatArray)
+            this.link(dataLinkArray);
     }
 }
 
