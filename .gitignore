@@ -3,3 +3,4 @@ temp
 coverage
 .vscode
 npm-debug.log
+.idea

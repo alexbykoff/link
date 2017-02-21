@@ -21,7 +21,7 @@ class Watchable {
         this.tracking = false; // checks if watchable is tracking input
         this.trackElement = ''; // attribute of tracked element
 
-        this.event = (event) => this.set(event.target.value); // this is the tracking event stored as 'this' bound fucntion
+        this.event = (event) => this.set(event.target.value); // this is the tracking event stored as 'this' bound function
 
         Watchable.watchables.add(name); // add this watchable to the global Set
 

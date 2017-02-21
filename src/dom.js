@@ -1,5 +1,11 @@
 const DOM = {};
 
+
+/*Method is used to create a list of elements which
+then are filled with watchable's iterbale data.
+Method takes a child element of the data-repeat element
+and mimics its type and all the classes if any*/
+
 DOM.dataRepeater = function (args) {
     if (args.length && this._value) {
 
@@ -8,13 +14,28 @@ DOM.dataRepeater = function (args) {
         }
 
         args.map(element => {
-            const child = element.children[0]; // don't target text nodes
+            let type, classes;
+            if (element.children) {
+                type = element.children[0].nodeName;
+                classes = [...element.children[0].classList];          
+            } else {
+                type = 'DIV';
+                classes = '';
+            }
             element.innerHTML = '';
+
             this._value.forEach(value => {
-                const sibling = document.createElement(child.nodeName);
+                
+                const sibling = document.createElement(type);
+                
                 sibling.nodeName === "INPUT" ?
                     sibling.value = value :
                     sibling.innerHTML = value;
+                
+                if (classes) {
+                    classes.forEach(c => sibling.classList.add(c));
+                }
+
                 element.appendChild(sibling);
             });
         });

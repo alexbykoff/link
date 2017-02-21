@@ -26,7 +26,8 @@ currently there are three data attributes you can use in your HTML elements:
 `data-watchable` - this element is replaced with the watchable's value. (watchabale is created as `new Watchable(options)`)    
 `data-link` - this element emits its value (i.e - input text) to the bound Watchable  
 No listeners or manual HTML updates needed. 
-`data-repeat` - this element is a wrapper for enumerable data you want to dispaly as a list.  
+`data-repeat` - this element is a wrapper for enumerable data you want to dispaly as a list. Its child
+is used as a model for creating new clones with the same element type and classes.   
 
 `<p>At the moment I have <span data-watchable="cats"></span> cats!</p>`  
 create any HTML element with `watchable` attribute with value same as the name of your watchable variable.  
