@@ -5,7 +5,7 @@ module.exports = {
     entry: './src/index.js',
     output: {
         path: path.join(__dirname, 'dist'),
-        publicPath: '../dist/',
+        publicPath: './dist/',
         filename: '[name].bundle.js',
         chunkFilename: '[id].bundle.js',
         libraryTarget: "var",
@@ -25,6 +25,7 @@ module.exports = {
         new webpack.optimize.UglifyJsPlugin()
     ],
     devServer: {
+        inline: true,
         contentBase: path.resolve(__dirname, './'),
     },
 };
