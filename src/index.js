@@ -21,6 +21,8 @@ class Watchable {
         this.tracking = false; // checks if watchable is tracking input
         this.trackElement = ''; // attribute of tracked element
 
+        this.sub = new Map();
+
         this.event = (event) => this.set(event.target.value); // this is the tracking event stored as 'this' bound function
 
         Watchable.watchables.add(name); // add this watchable to the global Set
@@ -33,15 +35,11 @@ class Watchable {
         // Do nothing, do not fire listeners if value has not changed, do not rerende
         if (this._type !== "any" && typeof value !== typeof this._type) {
             return Watchable.invokeError("typeMismatch");
-            // Do nothing and throw error if attempting to set wrong type value
-            // Ignore type checking if type either "any" or omitted
         }
 
         this._value = value; // TODO: not the best way
 
-        if (this.callbacks.length) {
-            this.callbacks.forEach(callback => callback());
-        }
+        if (this.sub.entries()) [...this.sub.values()].forEach(cb => cb());
 
         return this.render();
     }
@@ -60,14 +58,11 @@ class Watchable {
             Watchable.invokeError("typeMismatch");
     }
 
-    subscribe(callback) {
+    subscribe(name, callback) {
         // Adds callbacks that are invoked when value is changed
         // Callbacks are not fired when watchable is detached
-        if (typeof callback !== "function") return; // only functions can subscribe to changes
-
-        if (this.callbacks.indexOf(callback) === -1) {
-            return this.callbacks.push(callback);
-        }
+        return typeof name !== "string" ? Watchable.invokeError("subMustHaveName") :
+            this.sub.set(name, callback);
     }
 
     binds(id) {
@@ -102,10 +97,10 @@ class Watchable {
             Watchable.watchables.add(this.name);
     }
 
-    unsubscribe() {
-        // Removes all the subscriptions
-        // TODO: Handpick subscribers
-        return this.callbacks = [];
+    unsubscribe(name) {
+        if (!name) return this.sub.clear();
+        if (!this.sub.has(name)) return Watchable.invokeError("cantUnsub");
+        return this.sub.delete(name);
     }
 
     setType(type) {
