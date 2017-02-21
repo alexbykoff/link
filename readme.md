@@ -26,7 +26,8 @@ currently there are three data attributes you can use in your HTML elements:
 `data-watchable` - this element is replaced with the watchable's value. (watchabale is created as `new Watchable(options)`)    
 `data-link` - this element emits its value (i.e - input text) to the bound Watchable  
 No listeners or manual HTML updates needed. 
-`data-repeat` - this element is a wrapper for enumerable data you want to dispaly as a list.  
+`data-repeat` - this element is a wrapper for enumerable data you want to dispaly as a list. Its child
+is used as a model for creating new clones with the same element type and classes.   
 
 `<p>At the moment I have <span data-watchable="cats"></span> cats!</p>`  
 create any HTML element with `watchable` attribute with value same as the name of your watchable variable.  
@@ -36,13 +37,17 @@ You can put any text or elements inside that will be displayed until watchable i
 - `const cats = new Watchable("cats", {value: 2, type: "number"})`  
 creates new watchable  
 arguments: `(name, {value: value, type: type})`  
-`name` - string, manadotry, must be the same as variable name  
-`value, type` - optional.   
+`name` - string, identifies `data-watchable` HTML element.    
+`value, type` - optional.  If you provide `type` watchable turns into a strictly typed variable.     
 `value` can be of any reasonable type. Defaults to `null`  
 `type` - string, can be `"string"`, `"number"`, `"boolean"`, `"any"`, defaults to `"any"`  
 
-- `cats.subscribe( () => console.log("The number of cats has changed!"))`  
+- `cats.subscribe("catTrack", () => console.log("The number of cats has changed!"))`  
 callback is invoked every time watchable value is changed  
+- `cats.unsubscribe("catTrack")`  
+removes named subscription  
+- `cats.unsubscribe()`  
+unsubscribes from all the events  
 - `cats.value()`  
 returns current watchable value  
 - `cats.set(cats.value() + 5)`  
@@ -70,9 +75,9 @@ You can `data-link` as much elements to one watchable as you want.
 `myInputTracker.set("new value!");` - input field changes as well.  
 
 ## Repeatables:  
-`<div data-repeat="mycats"><p>There goes my list of cats</p></div>`
-`const catList = new Watchable("mycats")`
-`let catArray =["Meower", "Bigelow", "Fluffy", "Jackson"]`
+`<div data-repeat="mycats"><p>There goes my list of cats</p></div>`  
+`const catList = new Watchable("mycats")`  
+`let catArray =["Meower", "Bigelow", "Fluffy", "Jackson"]`  
 `catList.set(catArray)`  
 
 ###You are set.

@@ -24,9 +24,10 @@
             <button onclick="test.set(test.value()+1)">+</button>
         </div>
         <h4>Your mouse X is at: <span data-watchable="mousePos">Waiting for mouse movement</span></h4>
-        <div>One and two-way binding - start typing in the input below: <p data-watchable="inputField"></p>
-        <button onClick="inputField.set('All linked elements changed as well')">Click to change text above</button>
-        <br>
+        <div>One and two-way binding - start typing in the input below:
+            <p data-watchable="inputField"></p>
+            <button onClick="inputField.set('All linked elements changed as well')">Click to change text above</button>
+            <br>
         </div>
         <input type="text" data-link="inputField" id="myinput" placeholder="this is linked">
         <p>Below there is a two-way binding. It does not have 'data-watchable' attribute, just a link</p>
@@ -34,19 +35,24 @@
         <br>
         <p>There goes "data-repeat" for [1, 2, 3, "cats"]</p>
         <button onclick="arr.set([1,2,3,'cats'])">click to generate a list of data</button>
-        <div data-repeat="arr"><p>Waiting for your action</p></div>
+        <div data-repeat="arr">
+            <p class="cloned--class another--class">Waiting for your action</p>
+        </div>
     </div>
     <script>
         var test = new Watchable("test", {
             value: 3
         });
 
-        test.subscribe(function () {
-            console.log("test value has changed");
-        })
-         test.subscribe(function () {
+        test.subscribe("test1",
+            function () {
+                console.log("test value has changed")
+            });
+
+        var log = function () {
             console.log("test value has changed yo");
-        })
+        }
+        test.subscribe("test2", log);
 
         var inputField = new Watchable("inputField");
         inputField.binds("myinput");
@@ -55,12 +61,17 @@
             value: "waiting for mouse"
         });
 
-        var arr= new Watchable("arr");
+        var mouseTotal = 0;
 
-        mousePos.subscribe(
-            document.addEventListener('mousemove', function (e) {
-                mousePos.set(e.screenX)
-            }));
+        var arr = new Watchable("arr");
+
+        document.addEventListener('mousemove', function (e) {
+            mousePos.set(e.screenX + " Your mouse travelled " + mouseTotal + " so far");
+        });
+
+        mousePos.subscribe("mouse", function () {
+            mouseTotal++
+        })
     </script>
 </body>
 
