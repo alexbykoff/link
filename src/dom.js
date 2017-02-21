@@ -1,6 +1,5 @@
 const DOM = {};
 
-
 /*Method is used to create a list of elements which
 then are filled with watchable's iterbale data.
 Method takes a child element of the data-repeat element
@@ -24,18 +23,14 @@ DOM.dataRepeater = function (args) {
             }
             element.innerHTML = '';
 
-            this._value.forEach(value => {
-                
+            this._value.forEach(value => { 
                 const sibling = document.createElement(type);
-                
                 sibling.nodeName === "INPUT" ?
                     sibling.value = value :
                     sibling.innerHTML = value;
-                
                 if (classes) {
                     classes.forEach(c => sibling.classList.add(c));
                 }
-
                 element.appendChild(sibling);
             });
         });
