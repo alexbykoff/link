@@ -8,7 +8,7 @@ DOM.dataRepeater = function (args) {
         }
         args.map(element => {
             console.log(element)
-            const child = element.childNodes;
+            const child = element.firstChild;
             console.log(child)
             element.innerHTML = '';
             this._value.forEach(value => {
