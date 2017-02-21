@@ -6,10 +6,9 @@ DOM.dataRepeater = function (args) {
         if (!Array.isArray(this._value)) {
             return Watchable.invokeError("notEnumerable");
         }
+
         args.map(element => {
-            console.log(element)
-            const child = element.children[0];
-            console.log(child)
+            const child = element.children[0]; // don't target text nodes
             element.innerHTML = '';
             this._value.forEach(value => {
                 const sibling = document.createElement(child.nodeName);
@@ -18,7 +17,6 @@ DOM.dataRepeater = function (args) {
                     sibling.innerHTML = value;
                 element.appendChild(sibling);
             });
-
         });
     }
     return this;
