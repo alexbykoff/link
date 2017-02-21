@@ -16,12 +16,11 @@ class Watchable {
         this.name = name; // used for attaching and detaching
         this._type = this.setType(type);
         this._value = this.setInitialVal(value);
-        this.callbacks = []; // stores callbacks for this instance
         this.isDetached = false; // initially watchable is attached to DOM
         this.tracking = false; // checks if watchable is tracking input
         this.trackElement = ''; // attribute of tracked element
 
-        this.sub = new Map();
+        this.sub = new Map(); // subscribtions storage
 
         this.event = (event) => this.set(event.target.value); // this is the tracking event stored as 'this' bound function
 
