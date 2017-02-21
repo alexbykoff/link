@@ -21,7 +21,7 @@ class Watchable {
         this.tracking = false; // checks if watchable is tracking input
         this.trackElement = ''; // attribute of tracked element
 
-        this.event = (event) => this.set(event.target.value); // this is the tracking event stored as 'this' bound fucntion
+        this.event = (event) => this.set(event.target.value); // this is the tracking event stored as 'this' bound function
 
         Watchable.watchables.add(name); // add this watchable to the global Set
 
@@ -109,8 +109,7 @@ class Watchable {
     }
 
     setType(type) {
-      switch (type) {
-
+        switch (type) {
             case "string":
                 type = "string";
                 break;
@@ -126,15 +125,12 @@ class Watchable {
             default:
                 break;
         }
-
         return type;
     }
 
     static invokeError(errorcode) {
         throw new Error(Watchable.error(errorcode));
     }
-
-
 
     render() {
         if (!document) return Watchable.invokeError("noDocument");
@@ -144,14 +140,11 @@ class Watchable {
         const dataLinkArray = [...document.querySelectorAll(`[data-link=${this.name}]`)];
         const dataRepeatArray = [...document.querySelectorAll(`[data-repeat=${this.name}]`)];
 
-       this.watch(dataWatchableArray)
-            this.repeat(dataRepeatArray)
-            this.link(dataLinkArray);
+        this.watch(dataWatchableArray).repeat(dataRepeatArray).link(dataLinkArray);
     }
 }
 
 Watchable.watchables = new Set();
 Watchable.error = error;
-
 
 module.exports = Watchable;
