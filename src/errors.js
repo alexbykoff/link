@@ -34,6 +34,14 @@ const error = (type) => {
             message = "only enumerables can be assigned to 'data-repeat'";
             break;
 
+        case("subMustHaveName"):
+            message = "first parameter of 'subscribe' must be a string. You might have forgotten to add it.";
+            break;
+
+        case("cantUnsub"):
+            message = "can not unsubscribe. Make sure you have provided a correct name as an argument.";
+            break;
+
         default:
             return;
     }
