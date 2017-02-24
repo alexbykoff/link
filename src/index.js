@@ -137,7 +137,7 @@ class Watchable {
     }
 
     render() {
-        if (!document) return Watchable.invokeError("noDocument");
+        if (typeof document === "undefined") return Watchable.invokeError("noDocument");
         if (!Watchable.watchables.has(this.name)) return;
 
         const dataWatchableArray = [...document.querySelectorAll(`[data-watchable=${this.name}]`)];
