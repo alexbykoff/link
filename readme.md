@@ -23,7 +23,7 @@
 
 ### HTML:  
 currently there are three data attributes you can use in your HTML elements:  
-`data-watchable` - this element is replaced with the watchable's value. (watchabale is created as `new Watchable(options)`)    
+`data-watchable` - this element's inner HTML is replaced with the watchable's value. (watchabale is created as `new Watchable(options)`)    
 `data-link` - this element emits its value (i.e - input text) to the bound Watchable  
 No listeners or manual HTML updates needed. 
 `data-repeat` - this element is a wrapper for enumerable data you want to dispaly as a list. Its child
@@ -41,7 +41,6 @@ arguments: `(name, {value: value, type: type})`
 `value, type` - optional.  If you provide `type` watchable turns into a strictly typed variable.     
 `value` can be of any reasonable type. Defaults to `null`  
 `type` - string, can be `"string"`, `"number"`, `"boolean"`, `"any"`, defaults to `"any"`  
-
 - `cats.subscribe("catTrack", () => console.log("The number of cats has changed!"))`  
 callback is invoked every time watchable value is changed  
 - `cats.unsubscribe("catTrack")`  
@@ -52,8 +51,6 @@ unsubscribes from all the events
 returns current watchable value  
 - `cats.set(cats.value() + 5)`  
 DOM is updated with new value, callback is invoked  
-- `cats.unsubscribe()`  
-no more callbacks  
 - `cats.detach()`  
 removes watchable, DOM is not updated anymore, value changes are recorded  
 - `cats.attach()`  
