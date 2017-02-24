@@ -25,6 +25,8 @@
     "babel-register": "^6.23.0",
     "chai": "^3.5.0",
     "istanbul": "^1.1.0-alpha.1",
+    "jsdom": "^9.11.0",
+    "jsdom-global": "^2.1.1",
     "mocha": "^3.2.0",
     "webpack": "^2.2.1",
     "webpack-dev-server": "^2.3.0"
