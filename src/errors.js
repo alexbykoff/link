@@ -42,6 +42,10 @@ const error = (type) => {
             message = "can not unsubscribe. Make sure you have provided a correct name as an argument.";
             break;
 
+        case("cantHaveIdRepeat"):
+            message = "repeatable template element can not have an 'id'. Use HTML classes instead";
+            break;
+
         default:
             return;
     }
