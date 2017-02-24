@@ -14,7 +14,7 @@ const error = (type) => {
             break;
 
         case ("nameMustBeString"):
-            message = "watchable's name should always be a string..\
+            message = "watchable's name should always be a string.\
             \nMay be you forgot to add the name argument.";
             break;
 
@@ -27,7 +27,7 @@ const error = (type) => {
             break;
         
         case("noDocument"):
-            message = "you can run this library from the HTML page only. No 'document' object was found";
+            message = "you can run this library from the HTML page only. No 'document' object was found.";
             break;
 
         case("notEnumerable"):
@@ -43,13 +43,13 @@ const error = (type) => {
             break;
 
         case("cantHaveIdRepeat"):
-            message = "repeatable template element can not have an 'id'. Use HTML classes instead";
+            message = "repeatable template element can not have an 'id'. Use HTML classes instead.";
             break;
 
         default:
             return;
     }
-    console && console.warn("%c Watchable error: %c " + message, "color: white; background-color: navy", "");
+    console && console.warn("%c Link error message: %c " + message, "font-weight: lighter; color: white; background-color: navy", "");
     throw new Error("Link syntax error");
 };
 
