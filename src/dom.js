@@ -15,6 +15,7 @@ DOM.dataRepeater = function (args) {
         args.map(element => {
             let type, classes;
             if (element.children) {
+                if (element.children[0].id) return Watchable.invokeError("cantHaveIdRepeat");
                 type = element.children[0].nodeName;
                 classes = [...element.children[0].classList];          
             } else {
@@ -49,6 +50,7 @@ DOM.dataLinker = function (args) {
 
 DOM.dataWatcher = function (args) {
     args.map(element => element.innerHTML = this._value);
+    Watchable.watchables.set(this.name, this._value);
     return this;
 }
 

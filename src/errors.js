@@ -14,12 +14,12 @@ const error = (type) => {
             break;
 
         case ("nameMustBeString"):
-            message = "watchable's name should always be a string..\
+            message = "watchable's name should always be a string.\
             \nMay be you forgot to add the name argument.";
             break;
 
         case ("cantAttach"):
-            message = "you can not 'attach' a non-detached watchable. 'detach()' first.";
+            message = "you can not 'attach' a non-detached watchable. 'detach()' first. Watchables are automatically attached upon creation.";
             break;
 
         case ("cantBind"):
@@ -27,7 +27,7 @@ const error = (type) => {
             break;
         
         case("noDocument"):
-            message = "you can run this library from the HTML page only. No 'document' object was found";
+            message = "you can run this library from the HTML page only. No 'document' object was found.";
             break;
 
         case("notEnumerable"):
@@ -42,10 +42,14 @@ const error = (type) => {
             message = "can not unsubscribe. Make sure you have provided a correct name as an argument.";
             break;
 
+        case("cantHaveIdRepeat"):
+            message = "repeatable template element can not have an 'id'. Use HTML classes instead.";
+            break;
+
         default:
             return;
     }
-    console && console.warn("%c Watchable error: %c " + message, "color: white; background-color: navy", "");
+    console && console.warn("%c Link error: %c " + message, "color: #eee; background-color: navy", "");
     throw new Error("Link syntax error");
 };
 

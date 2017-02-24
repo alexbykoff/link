@@ -24,7 +24,7 @@ class Watchable {
 
         this.event = (event) => this.set(event.target.value); // this is the tracking event stored as 'this' bound function
 
-        Watchable.watchables.add(name); // add this watchable to the global Set
+        Watchable.watchables.set(this.name, this._value); // add this watchable to the global Set
 
         this.render();
     }
@@ -38,7 +38,7 @@ class Watchable {
 
         this._value = value; // TODO: not the best way
 
-        if (this.sub.entries()) [...this.sub.values()].forEach(cb => cb());
+        if (this.sub.entries())[...this.sub.values()].forEach(cb => cb());
 
         return this.render();
     }
@@ -62,6 +62,12 @@ class Watchable {
         // Callbacks are not fired when watchable is detached
         return typeof name !== "string" ? Watchable.invokeError("subMustHaveName") :
             this.sub.set(name, callback);
+    }
+
+    unsubscribe(name) {
+        if (!name) return this.sub.clear();
+        if (!this.sub.has(name)) return Watchable.invokeError("cantUnsub");
+        return this.sub.delete(name);
     }
 
     binds(id) {
@@ -91,15 +97,19 @@ class Watchable {
 
     attach() {
         // Attaches watchable to DOM updates. Last set value is rendered (Even the values set in detached mode)
-        return Watchable.watchables.has(this.name) ?
-            Watchable.invokeError("cantAttach") :
-            Watchable.watchables.add(this.name);
+        if (Watchable.watchables.has(this.name)) {
+            return Watchable.invokeError("cantAttach")
+        }
+        Watchable.watchables.set(this.name, this._value);
+        return this.render();
     }
 
-    unsubscribe(name) {
-        if (!name) return this.sub.clear();
-        if (!this.sub.has(name)) return Watchable.invokeError("cantUnsub");
-        return this.sub.delete(name);
+    static list() {
+        const watchableList = [];
+        [...Watchable.watchables.keys()].forEach(element => watchableList.push({
+             [element]: Watchable.watchables.get(element)
+         }));
+        return watchableList;
     }
 
     setType(type) {
@@ -123,7 +133,7 @@ class Watchable {
     }
 
     static invokeError(errorcode) {
-        throw new Error(Watchable.error(errorcode));
+        return Watchable.error(errorcode);
     }
 
     render() {
@@ -138,7 +148,7 @@ class Watchable {
     }
 }
 
-Watchable.watchables = new Set();
+Watchable.watchables = new Map();
 Watchable.error = error;
 
 module.exports = Watchable;

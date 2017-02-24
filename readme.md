@@ -5,7 +5,8 @@
 
 ![](./link.png)
 # Link  
-### An extremly simple micro library that binds variables to DOM  
+### An extremly simple micro library that binds variables to DOM.  
+### No virtual DOM, no HTML in JS, no JS in HTML.  
 
 [Live demo here](https://tomkallen.github.io/link/)  
 
@@ -17,13 +18,12 @@
 
 ### Installation (usage)
 
-1. `<script src="./dist/main.bundle.js"></script>`
-
+1. `<script src="./dist/main.bundle.js"></script>
 ## Usage
 
 ### HTML:  
 currently there are three data attributes you can use in your HTML elements:  
-`data-watchable` - this element is replaced with the watchable's value. (watchabale is created as `new Watchable(options)`)    
+`data-watchable` - this element's inner HTML is replaced with the watchable's value. (watchabale is created as `new Watchable(options)`)    
 `data-link` - this element emits its value (i.e - input text) to the bound Watchable  
 No listeners or manual HTML updates needed. 
 `data-repeat` - this element is a wrapper for enumerable data you want to dispaly as a list. Its child
@@ -43,26 +43,29 @@ arguments: `(name, {value: value, type: type})`
 `type` - string, can be `"string"`, `"number"`, `"boolean"`, `"any"`, defaults to `"any"`  
 
 - `cats.subscribe("catTrack", () => console.log("The number of cats has changed!"))`  
-callback is invoked every time watchable value is changed  
+callback is invoked every time watchable value is changed.
+ Callback must be wrapped into an anonymous function or declared as a function expression.
+ You can have as many subscriptions as you desire.  
 - `cats.unsubscribe("catTrack")`  
 removes named subscription  
 - `cats.unsubscribe()`  
 unsubscribes from all the events  
+
 - `cats.value()`  
 returns current watchable value  
 - `cats.set(cats.value() + 5)`  
 DOM is updated with new value, callback is invoked  
-- `cats.unsubscribe()`  
-no more callbacks  
+
 - `cats.detach()`  
 removes watchable, DOM is not updated anymore, value changes are recorded  
 - `cats.attach()`  
 links to DOM again. Last set value is rendered   
+
 - `cats.type()`  
 returns watchable type
 
 ### One-way binding:  
-`<input type="text" id="myinput" />` - create input with as id  
+`<input type="text" id="myinput" />` - create input with an id  
 `<p data-watchable="myInputTracker"></p>` - create watchable element   
   
 `const myText = new Watchable("myInputTracker")` - set up watchable  
@@ -79,6 +82,10 @@ You can `data-link` as much elements to one watchable as you want.
 `const catList = new Watchable("mycats")`  
 `let catArray =["Meower", "Bigelow", "Fluffy", "Jackson"]`  
 `catList.set(catArray)`  
+
+## Helpers:  
+`Watchable.list()`  
+returns an array of all the {watchable name: watchable value} pairs  
 
 ###You are set.
 
