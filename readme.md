@@ -18,14 +18,15 @@
 
 ### Installation (usage)
 
-1. `<script src="./dist/main.bundle.js"></script>
+1. `<script src="./dist/main.bundle.js"></script>`
+
 ## Usage
 
 ### HTML:  
 currently there are three data attributes you can use in your HTML elements:  
 `data-watchable` - this element's inner HTML is replaced with the watchable's value. (watchabale is created as `new Watchable(options)`)    
 `data-link` - this element emits its value (i.e - input text) to the bound Watchable  
-No listeners or manual HTML updates needed. 
+No listeners or manual HTML updates needed.
 `data-repeat` - this element is a wrapper for enumerable data you want to dispaly as a list. Its child
 is used as a model for creating new clones with the same element type and classes.   
 
@@ -33,7 +34,7 @@ is used as a model for creating new clones with the same element type and classe
 create any HTML element with `watchable` attribute with value same as the name of your watchable variable.  
 You can put any text or elements inside that will be displayed until watchable is linked. After that an every time the variable is changed the new value is rendered to the DOM.   
 
-### JS: 
+### JS:
 - `const cats = new Watchable("cats", {value: 2, type: "number"})`  
 creates new watchable  
 arguments: `(name, {value: value, type: type})`  
@@ -67,7 +68,7 @@ returns watchable type
 ### One-way binding:  
 `<input type="text" id="myinput" />` - create input with an id  
 `<p data-watchable="myInputTracker"></p>` - create watchable element   
-  
+
 `const myText = new Watchable("myInputTracker")` - set up watchable  
 `myText.binds("myinput")` - bind watchable to input  
 `myText.binds()` - unbind watchable  
@@ -88,4 +89,3 @@ You can `data-link` as much elements to one watchable as you want.
 returns an array of all the {watchable name: watchable value} pairs  
 
 ###You are set.
-
