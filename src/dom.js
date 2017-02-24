@@ -50,6 +50,7 @@ DOM.dataLinker = function (args) {
 
 DOM.dataWatcher = function (args) {
     args.map(element => element.innerHTML = this._value);
+    Watchable.watchables.set(this.name, this._value);
     return this;
 }
 

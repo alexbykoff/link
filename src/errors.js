@@ -19,7 +19,7 @@ const error = (type) => {
             break;
 
         case ("cantAttach"):
-            message = "you can not 'attach' a non-detached watchable. 'detach()' first.";
+            message = "you can not 'attach' a non-detached watchable. 'detach()' first. Watchables are automatically attached upon creation.";
             break;
 
         case ("cantBind"):
@@ -49,7 +49,7 @@ const error = (type) => {
         default:
             return;
     }
-    console && console.warn("%c Link error message: %c " + message, "font-weight: lighter; color: white; background-color: navy", "");
+    console && console.warn("%c Link error: %c " + message, "color: #eee; background-color: navy", "");
     throw new Error("Link syntax error");
 };
 

@@ -43,7 +43,9 @@ arguments: `(name, {value: value, type: type})`
 `type` - string, can be `"string"`, `"number"`, `"boolean"`, `"any"`, defaults to `"any"`  
 
 - `cats.subscribe("catTrack", () => console.log("The number of cats has changed!"))`  
-callback is invoked every time watchable value is changed  
+callback is invoked every time watchable value is changed.
+ Callback must be wrapped into an anonymous function or declared as a function expression.
+ You can have as many subscriptions as you desire.  
 - `cats.unsubscribe("catTrack")`  
 removes named subscription  
 - `cats.unsubscribe()`  
@@ -80,6 +82,10 @@ You can `data-link` as much elements to one watchable as you want.
 `const catList = new Watchable("mycats")`  
 `let catArray =["Meower", "Bigelow", "Fluffy", "Jackson"]`  
 `catList.set(catArray)`  
+
+## Helpers:  
+`Watchable.list()`  
+returns an array of all the {watchable name: watchable value} pairs  
 
 ###You are set.
 
