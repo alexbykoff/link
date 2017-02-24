@@ -3,7 +3,7 @@ const expect = chai.expect;
 const assert = chai.assert;
 let Watchable = require("../src/index");
 
-require('jsdom-global')();
+require("jsdom-global")();
 global.Watchable = Watchable;
 
 describe("setType", () => {
