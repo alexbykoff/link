@@ -5,7 +5,8 @@
 
 ![](./link.png)
 # Link  
-### An extremly simple micro library that binds variables to DOM  
+### An extremly simple micro library that binds variables to DOM.  
+### No virtual DOM, no HTML in JS, no JS in HTML.  
 
 [Live demo here](https://tomkallen.github.io/link/)  
 
@@ -17,8 +18,7 @@
 
 ### Installation (usage)
 
-1. `<script src="./dist/main.bundle.js"></script>`
-
+1. `<script src="./dist/main.bundle.js"></script>
 ## Usage
 
 ### HTML:  
@@ -41,25 +41,29 @@ arguments: `(name, {value: value, type: type})`
 `value, type` - optional.  If you provide `type` watchable turns into a strictly typed variable.     
 `value` can be of any reasonable type. Defaults to `null`  
 `type` - string, can be `"string"`, `"number"`, `"boolean"`, `"any"`, defaults to `"any"`  
+
 - `cats.subscribe("catTrack", () => console.log("The number of cats has changed!"))`  
 callback is invoked every time watchable value is changed  
 - `cats.unsubscribe("catTrack")`  
 removes named subscription  
 - `cats.unsubscribe()`  
 unsubscribes from all the events  
+
 - `cats.value()`  
 returns current watchable value  
 - `cats.set(cats.value() + 5)`  
 DOM is updated with new value, callback is invoked  
+
 - `cats.detach()`  
 removes watchable, DOM is not updated anymore, value changes are recorded  
 - `cats.attach()`  
 links to DOM again. Last set value is rendered   
+
 - `cats.type()`  
 returns watchable type
 
 ### One-way binding:  
-`<input type="text" id="myinput" />` - create input with as id  
+`<input type="text" id="myinput" />` - create input with an id  
 `<p data-watchable="myInputTracker"></p>` - create watchable element   
   
 `const myText = new Watchable("myInputTracker")` - set up watchable  
