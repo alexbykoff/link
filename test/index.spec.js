@@ -16,4 +16,14 @@ describe("setType", () => {
         let x = new Watchable("test", {value: "test", type: "string"});
         assert.equal("string", x.type());
     });
+
+    it("should return a number when number passed as an argument", () => {
+        let x = new Watchable("test", {value: 2, type: "number"});
+        assert.equal("number", x.type());
+    });
+
+    it("should return a boolean when boolean passed as an argument", () => {
+        let x = new Watchable("test", {value: false, type: "boolean"});
+        assert.equal("boolean", x.type());
+    });
 });

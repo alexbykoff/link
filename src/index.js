@@ -48,7 +48,7 @@ class Watchable {
     }
 
     type() {
-        return this._type;
+        return this._type === "any" ? "any" : typeof this._type;
     }
 
     setInitialVal(value) {
