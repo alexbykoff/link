@@ -40,7 +40,8 @@ class Watchable {
 
         if (this.sub.entries())[...this.sub.values()].forEach(cb => cb());
 
-        return this.render();
+        this.render();
+        return this;
     }
 
     value() {
@@ -85,14 +86,16 @@ class Watchable {
         if (element) {
             this.tracking = true;
             this.trackElement = element;
-            return element.addEventListener('input', this.event);
+            element.addEventListener('input', this.event);
         }
+        return this;
     }
 
     detach() {
         // Detach watchable from DOM updates. Note - value changes are still recorded
         Watchable.watchables.has(this.name) && Watchable.watchables.delete(this.name);
-        return this.isDetached = true;
+        this.isDetached = true;
+        return this;
     }
 
     attach() {
@@ -101,14 +104,15 @@ class Watchable {
             return Watchable.invokeError("cantAttach")
         }
         Watchable.watchables.set(this.name, this._value);
-        return this.render();
+        this.render();
+        return this;
     }
 
     static list() {
         const watchableList = [];
         [...Watchable.watchables.keys()].forEach(element => watchableList.push({
-             [element]: Watchable.watchables.get(element)
-         }));
+            [element]: Watchable.watchables.get(element)
+        }));
         return watchableList;
     }
 
